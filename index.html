@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PAYNT — Holy drill</title>
+
+  <link rel="preconnect" href="https://fonts.bunny.net">
+  <link href="https://fonts.bunny.net/css?family=syne:400,700,800|jetbrains-mono:400,600" rel="stylesheet" />
+
+  <style>
+    :root{
+      --bg:#05050a;
+      --surface:#0d0d14;
+      --text:#f2f2f2;
+      --muted:rgba(242,242,242,.62);
+
+      /* Minimal neon: 1 hlavní + 1 vedlejší (ne “duha”) */
+      --accent:#00f5ff;     /* neon cyan */
+      --accent2:#ff2bd6;    /* hot pink */
+
+      --ink:#0a0a0f;
+      --border:rgba(255,255,255,.14);
+      --border2:rgba(255,255,255,.08);
+      --shadow:0 18px 60px rgba(0,0,0,.55);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:Syne, system-ui, -apple-system, Segoe UI, sans-serif;
+      overflow-x:hidden;
+      cursor:crosshair;
+    }
+    a{color:inherit;text-decoration:none}
+
+    /* Scrollbar */
+    ::-webkit-scrollbar{width:8px}
+    ::-webkit-scrollbar-track{background:#070711}
+    ::-webkit-scrollbar-thumb{background:linear-gradient(180deg, var(--accent), var(--accent2))}
+
+    /* Header */
+    header{
+      position:fixed;
+      top:18px; left:18px; right:18px;
+      z-index:50;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      mix-blend-mode:exclusion;
+    }
+    .logo{
+      font-weight:800;
+      letter-spacing:-1px;
+      text-transform:uppercase;
+      font-size:1.45rem;
+    }
+    nav{
+      display:flex;
+      gap:1.4rem;
+      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size:.8rem;
+    }
+    nav a{color:rgba(255,255,255,.9)}
+    nav a:hover{color:var(--accent); text-decoration:line-through}
+
+    /* Hero */
+    .hero{
+      min-height:100vh;
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:3.2rem;
+      align-items:center;
+      padding:0 4vw;
+      position:relative;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:-90px;
+      background:
+        radial-gradient(circle at 20% 25%, rgba(0,245,255,.18) 0, transparent 45%),
+        radial-gradient(circle at 85% 70%, rgba(255,43,214,.10) 0, transparent 55%),
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,.05) 0, transparent 55%);
+      filter:blur(18px);
+      opacity:.95;
+      pointer-events:none;
+    }
+
+    .hero-text{position:relative; z-index:2}
+
+    .micro{
+      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size:.78rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.6);
+      margin-bottom:1rem;
+    }
+    .micro b{color:var(--accent); font-weight:600}
+
+    .hero-text h1{
+      font-size:clamp(3.1rem, 9.7vw, 7.6rem);
+      line-height:.9;
+      text-transform:uppercase;
+      font-weight:800;
+      letter-spacing:-0.03em;
+      margin-bottom:1rem;
+    }
+
+    /* Bez stroke (kvůli divným písmenům) */
+    .hero-text .ghost{
+      display:block;
+      color:rgba(242,242,242,.16);
+      transition: transform .25s ease, color .25s ease, letter-spacing .25s ease;
+    }
+    .hero-text .ghost:hover{
+      color:var(--accent);
+      transform: translateX(8px) skewX(-10deg);
+      letter-spacing: 0.01em;
+    }
+
+    .hero-text .solid{
+      display:block;
+      color:var(--text);
+      text-shadow: 0 14px 60px rgba(0,245,255,.08);
+    }
+
+    .solid .hl{
+      color:var(--accent);
+      text-shadow: 0 20px 70px rgba(0,245,255,.18);
+    }
+
+    .sub{
+      margin-top:1.2rem;
+      max-width:560px;
+      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size:.92rem;
+      line-height:1.65;
+      color:rgba(255,255,255,.72);
+      border-left:2px solid var(--accent);
+      padding-left:1rem;
+    }
+
+    .cta{
+      margin-top:1.35rem;
+      display:flex;
+      gap:.8rem;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:.85rem 1.35rem;
+      border-radius:999px;
+      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size:.82rem;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      border:1px solid var(--border);
+      transition: transform .2s ease, background .2s ease, border-color .2s ease, color .2s ease;
+      cursor:pointer;
+      background:transparent;
+      color:rgba(255,255,255,.92);
+    }
+    .btn:hover{transform: translateY(-2px); border-color:rgba(255,255,255,.32)}
+    .btn-primary{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color:#000;
+      border-color: transparent;
+      box-shadow: 0 18px 55px rgba(0,245,255,.10);
+    }
+
+    /* Photo card (duotone + grain) */
+    .photo{
+      position:relative;
+      width:100%;
+      height:78vh;
+      min-height:520px;
+      border:1px solid var(--border2);
+      border-radius:22px;
+      overflow:hidden;
+      background:#0b0b14;
+      box-shadow: var(--shadow);
+      z-index:2;
+    }
+    .photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      filter: grayscale(100%) contrast(1.15) brightness(0.95);
+      transform: scale(1.03);
+      transition: transform .55s ease, filter .55s ease;
+      display:block;
+    }
+    .photo::before,
+    .photo::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+    }
+    .photo::before{
+      background:
+        radial-gradient(circle at 15% 20%, rgba(0,245,255,.70) 0, transparent 55%),
+        radial-gradient(circle at 80% 70%, rgba(255,43,214,.42) 0, transparent 60%),
+        linear-gradient(135deg, rgba(0,245,255,.16), rgba(255,43,214,.08));
+      mix-blend-mode: multiply;
+      opacity: .92;
+    }
+    .photo::after{
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          rgba(255,255,255,0.05),
+          rgba(255,255,255,0.05) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+      mix-blend-mode: overlay;
+      opacity:.12;
+    }
+    .photo:hover img{
+      filter: grayscale(0%) contrast(1.05) brightness(1.02);
+      transform: scale(1.06);
+    }
+    .photo:hover{
+      box-shadow: 12px 12px 0 var(--accent), var(--shadow);
+    }
+    .photo-badge{
+      position:absolute;
+      left:14px;
+      top:14px;
+      padding:.5rem .7rem;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.35);
+      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size:.74rem;
+      color: rgba(255,255,255,.85);
+      backdrop-filter: blur(10px);
+    }
+
+    /* Sections */
+    section{
+      padding:10vh 4vw;
+      border-top:1px solid var(--border2);
+      position:relative;
+    }
+    .section-title{
+      font-size:2.8rem;
+      text-transform:uppercase;
+      margin-bottom:2.0rem;
+      color:var(--accent);
+      letter-spacing:-0.02em;
+    }
+
+    /* Video cards */
+    .video{
+      background: var(--surface);
+      border:1px solid var(--border2);
+      border-radius:18px;
+      overflow:hidden;
+      transition: transform .25s ease, border-color .25s ease;
+    }
+    .video:hover{
+      transform: translateY(-6px);
+      border-color: rgba(0,245,255,.55);
+    }
+    .frame{
+      aspect-ratio:16/9;
+      width:100%;
+      display:block;
+      background:#000;
+    }
+    .video iframe{
+      width:100%;
+      height:100%;
+      border:0;
+      display:block;
+    }
+    .cap{
+      padding: .95rem 1.05rem 1.05rem;
+      border-top: 1px solid var(--border2);
+    }
+    .cap .name{
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:-0.01em;
+      font-size:1.05rem;
+      margin-bottom:.35rem;
+      color: rgba(255,255,255,.95);
+    }
+    .cap .meta{
+      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size:.78rem;
+      color: rgba(255,255,255,.55);
+    }
+
+    /* Featured layout */
+    .featured{
+      box-shadow: 0 22px 90px rgba(0,245,255,.06);
+    }
+    .featured .cap{
+      background: linear-gradient(135deg, rgba(0,245,255,.08), rgba(255,43,214,.05));
+    }
+    .featured .name{font-size:1.18rem}
+
+    .grid-3{
+      margin-top: 1.2rem;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:1.2rem;
+    }
+
+    /* Truth / evangelizace (spisovně, bez tlaku) */
+    .truth{
+      border-top:none;
+      background: #070711;
+    }
+    .truth .section-title{
+      color: var(--text);
+    }
+    .truth-box{
+      max-width: 980px;
+      border: 1px solid var(--border2);
+      border-radius: 22px;
+      padding: 2rem 2.1rem;
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 18px 70px rgba(0,0,0,.35);
+    }
+    .truth h3{
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      line-height: 1.05;
+      text-transform: uppercase;
+      margin-bottom: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .truth p{
+      font-size: 1.06rem;
+      line-height: 1.75;
+      margin-bottom: 1rem;
+      color: rgba(255,255,255,.78);
+      font-weight: 600;
+    }
+    .truth p b{
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .truth .dm{
+      display:inline-flex;
+      margin-top: 1.2rem;
+      padding: .95rem 1.3rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #000;
+      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      border: none;
+      transition: transform .2s ease;
+    }
+    .truth .dm:hover{
+      transform: translateY(-2px);
+    }
+    .truth .small{
+      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .86rem;
+      opacity: .72;
+      margin-top: 1rem;
+    }
+
+    footer{
+      padding: 3rem 4vw;
+      border-top: 1px solid var(--border2);
+      display:flex;
+      justify-content:space-between;
+      gap: 1rem;
+      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size:.82rem;
+      color: rgba(255,255,255,.5);
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 980px){
+      .hero{grid-template-columns:1fr; padding-top:110px}
+      .photo{height:52vh; min-height:360px}
+      header{top:10px; left:10px; right:10px}
+      .grid-3{grid-template-columns:1fr; gap:1rem;}
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">PAYNT</div>
+    <nav>
+      <a href="#hudba">HUDBA</a>
+      <a href="#slovo">SLOVO</a>
+      <a href="https://www.instagram.com/paynt__/" target="_blank" rel="noopener">IG</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="hero-text">
+      <div class="micro"><b>HOLY DRILL</b> • Praha • Paynt</div>
+
+      <h1>
+        <span class="ghost">RAP S</span>
+        <span class="ghost">BOHEM</span>
+        <span class="solid">JE <span class="hl">COOL.</span></span>
+      </h1>
+
+      <div class="sub">
+        „Slovo je oheň a vyčistí srdce.“<br>
+        Když je všude šum, lži a pomluvy, držím se Slova.
+      </div>
+
+      <div class="cta">
+        <button class="btn btn-primary" onclick="location.href='#hudba'">Pustit nejnovější</button>
+        <a class="btn" href="https://www.youtube.com/@PayntRecords" target="_blank" rel="noopener">YouTube kanál</a>
+      </div>
+    </div>
+
+    <div class="photo" aria-label="Paynt photo">
+      <div class="photo-badge">LIVE / MIX / REAL</div>
+      <img src="./photo_2026-02-04_11-58-59.jpg" alt="Paynt u mixpultu">
+    </div>
+  </section>
+
+  <section id="hudba">
+    <h2 class="section-title">Hudba</h2>
+
+    <!-- Featured (nejnovější) -->
+    <article class="video featured">
+      <div class="frame">
+        <iframe
+          loading="lazy"
+          src="https://www.youtube-nocookie.com/embed/L5X48CaHQOE?rel=0"
+          title="Šumivé víno"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+      <div class="cap">
+        <div class="name">Šumivé víno</div>
+        <div class="meta">// nejnovější drop</div>
+      </div>
+    </article>
+
+    <!-- 3 další -->
+    <div class="grid-3">
+      <article class="video">
+        <div class="frame">
+          <iframe loading="lazy"
+            src="https://www.youtube-nocookie.com/embed/DRjsyWVGXfs?rel=0"
+            title="Propaguji Boha"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <div class="cap">
+          <div class="name">Propaguji Boha</div>
+          <div class="meta">// holy drill</div>
+        </div>
+      </article>
+
+      <article class="video">
+        <div class="frame">
+          <iframe loading="lazy"
+            src="https://www.youtube-nocookie.com/embed/tjN1KLocrQA?rel=0"
+            title="Rytmus Boží"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <div class="cap">
+          <div class="name">Rytmus Boží</div>
+          <div class="meta">// rytmus, co drží</div>
+        </div>
+      </article>
+
+      <article class="video">
+        <div class="frame">
+          <iframe loading="lazy"
+            src="https://www.youtube-nocookie.com/embed/fZppEK3-OEY?rel=0"
+            title="Na poušti"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <div class="cap">
+          <div class="name">Na poušti</div>
+          <div class="meta">// když je ticho nejhlasitější</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="truth" id="slovo">
+    <h2 class="section-title">Slovo</h2>
+
+    <div class="truth-box">
+      <h3>Proč to dávám do rapu</h3>
+      <p>
+        Protože dnes je jednoduché mluvit nahlas… a přitom neříkat nic.
+        Já chci dělat hudbu, která má energii, ale také <b>směr</b>.
+      </p>
+      <p>
+        Když se kolem člověka točí šum, lži a pomluvy, je snadné se nechat strhnout.
+        Já se učím držet Slova — ne jako slogan, ale jako něco, co člověka vyčistí uvnitř.
+      </p>
+      <p>
+        Jestli chceš, napiš mi. Klidně skepticky, klidně na rovinu. Rozhovor je v pořádku.
+      </p>
+
+      <a class="dm" href="https://www.instagram.com/paynt__/" target="_blank" rel="noopener">Napsat DM na IG</a>
+
+      <div class="small">
+        Pokud chceš jen hudbu, respekt — nemusíš řešit nic dalšího.
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>© <span id="year"></span> PAYNT</div>
+    <div>IG: @paynt__ • YT: @PayntRecords</div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+
