@@ -2,11 +2,52 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>PAYNT — Holy drill</title>
+  <meta name="description" content="Paynt — holy drill. Rap s Bohem. Když je všude šum, lži a pomluvy, držím se Slova." />
+  <meta name="robots" content="index,follow" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#05050a" />
+
+  <!-- Canonical (důležité pro sdílení/SEO) -->
+  <link rel="canonical" href="https://payntrecords-gif.github.io/PayntRecords/" />
+
+  <!-- Open Graph (náhledy při sdílení) -->
+  <meta property="og:site_name" content="PAYNT" />
+  <meta property="og:title" content="PAYNT — Holy drill" />
+  <meta property="og:description" content="Rap s Bohem je cool. Slovo je oheň a vyčistí srdce." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="cs_CZ" />
+  <meta property="og:url" content="https://payntrecords-gif.github.io/PayntRecords/" />
+  <meta property="og:image" content="https://payntrecords-gif.github.io/PayntRecords/photo_2026-02-04_11-58-59.jpg" />
+
+  <!-- Twitter cards (většinou využije OG, ale tohle je safe) -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PAYNT — Holy drill" />
+  <meta name="twitter:description" content="Rap s Bohem je cool. Když je všude šum, lži a pomluvy, držím se Slova." />
+  <meta name="twitter:image" content="https://payntrecords-gif.github.io/PayntRecords/photo_2026-02-04_11-58-59.jpg" />
+
+  <!-- (Volitelné) Favicon: když později přidáš favicon.svg/png do rootu, odkomentuj -->
+  <!-- <link rel="icon" href="favicon.svg" type="image/svg+xml"> -->
+  <!-- <link rel="icon" href="favicon.png" type="image/png"> -->
 
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=syne:400,700,800|jetbrains-mono:400,600" rel="stylesheet" />
+
+  <!-- Structured data (jednoduché, neagresivní) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "PAYNT",
+    "url": "https://payntrecords-gif.github.io/PayntRecords/",
+    "sameAs": [
+      "https://www.instagram.com/paynt__/",
+      "https://www.youtube.com/@PayntRecords"
+    ]
+  }
+  </script>
 
   <style>
     :root{
@@ -15,7 +56,7 @@
       --text:#f2f2f2;
       --muted:rgba(242,242,242,.62);
 
-      /* Minimal neon: 1 hlavní + 1 vedlejší (ne “duha”) */
+      /* Minimal neon: 1 hlavní + 1 vedlejší */
       --accent:#00f5ff;     /* neon cyan */
       --accent2:#ff2bd6;    /* hot pink */
 
@@ -35,6 +76,26 @@
       cursor:crosshair;
     }
     a{color:inherit;text-decoration:none}
+
+    /* Přístupnost: skip link + focus */
+    .skip{
+      position:absolute;
+      left:-9999px;
+      top:10px;
+      padding:.7rem 1rem;
+      border-radius:999px;
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      color:#000;
+      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      z-index:999;
+    }
+    .skip:focus{left:12px}
+
+    :focus-visible{
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 8px;
+    }
 
     /* Scrollbar */
     ::-webkit-scrollbar{width:8px}
@@ -189,6 +250,8 @@
       box-shadow: var(--shadow);
       z-index:2;
     }
+
+    /* IMG: responsive + méně layout shiftu */
     .photo img{
       width:100%;
       height:100%;
@@ -198,6 +261,7 @@
       transition: transform .55s ease, filter .55s ease;
       display:block;
     }
+
     .photo::before,
     .photo::after{
       content:"";
@@ -318,7 +382,7 @@
       gap:1.2rem;
     }
 
-    /* Truth / evangelizace (spisovně, bez tlaku) */
+    /* Truth */
     .truth{
       border-top:none;
       background: #070711;
@@ -388,6 +452,16 @@
       flex-wrap:wrap;
     }
 
+    /* Respekt pro lidi citlivé na animace */
+    @media (prefers-reduced-motion: reduce){
+      *{scroll-behavior:auto}
+      .hero-text .ghost, .photo img, .btn{transition:none}
+      .hero-text .ghost:hover{transform:none}
+      .btn:hover{transform:none}
+      .photo:hover img{transform:scale(1.03)}
+      .video:hover{transform:none}
+    }
+
     @media (max-width: 980px){
       .hero{grid-template-columns:1fr; padding-top:110px}
       .photo{height:52vh; min-height:360px}
@@ -398,131 +472,149 @@
 </head>
 
 <body>
+  <a class="skip" href="#hudba">Přeskočit na obsah</a>
+
   <header>
     <div class="logo">PAYNT</div>
-    <nav>
+    <nav aria-label="Hlavní navigace">
       <a href="#hudba">HUDBA</a>
       <a href="#slovo">SLOVO</a>
-      <a href="https://www.instagram.com/paynt__/" target="_blank" rel="noopener">IG</a>
+      <a href="https://www.instagram.com/paynt__/" target="_blank" rel="noopener noreferrer">IG</a>
     </nav>
   </header>
 
-  <section class="hero" id="top">
-    <div class="hero-text">
-      <div class="micro"><b>HOLY DRILL</b> • Praha • Paynt</div>
+  <main>
+    <section class="hero" id="top" aria-label="Úvod">
+      <div class="hero-text">
+        <div class="micro"><b>HOLY DRILL</b> • Praha • Paynt</div>
 
-      <h1>
-        <span class="ghost">RAP S</span>
-        <span class="ghost">BOHEM</span>
-        <span class="solid">JE <span class="hl">COOL.</span></span>
-      </h1>
+        <h1>
+          <span class="ghost">RAP S</span>
+          <span class="ghost">BOHEM</span>
+          <span class="solid">JE <span class="hl">COOL.</span></span>
+        </h1>
 
-      <div class="sub">
-        „Slovo je oheň a vyčistí srdce.“<br>
-        Když je všude šum, lži a pomluvy, držím se Slova.
+        <div class="sub">
+          „Slovo je oheň a vyčistí srdce.“<br>
+          Když je všude šum, lži a pomluvy, držím se Slova.
+        </div>
+
+        <div class="cta">
+          <button class="btn btn-primary" type="button" onclick="location.href='#hudba'">Pustit nejnovější</button>
+          <a class="btn" href="https://www.youtube.com/@PayntRecords" target="_blank" rel="noopener noreferrer">YouTube kanál</a>
+        </div>
       </div>
 
-      <div class="cta">
-        <button class="btn btn-primary" onclick="location.href='#hudba'">Pustit nejnovější</button>
-        <a class="btn" href="https://www.youtube.com/@PayntRecords" target="_blank" rel="noopener">YouTube kanál</a>
+      <div class="photo" aria-label="Fotka">
+        <div class="photo-badge">LIVE / MIX / REAL</div>
+
+        <!-- Profi: picture (WebP) + fallback JPG + width/height kvůli CLS -->
+        <picture>
+          <source srcset="./photo_2026-02-04_11-58-59.webp" type="image/webp" />
+          <img
+            src="./photo_2026-02-04_11-58-59.jpg"
+            width="1184"
+            height="864"
+            alt="Paynt u mixpultu"
+            decoding="async" />
+        </picture>
       </div>
-    </div>
+    </section>
 
-    <div class="photo" aria-label="Paynt photo">
-      <div class="photo-badge">LIVE / MIX / REAL</div>
-      <img src="./photo_2026-02-04_11-58-59.jpg" alt="Paynt u mixpultu">
-    </div>
-  </section>
+    <section id="hudba" aria-label="Hudba">
+      <h2 class="section-title">Hudba</h2>
 
-  <section id="hudba">
-    <h2 class="section-title">Hudba</h2>
-
-    <!-- Featured (nejnovější) -->
-    <article class="video featured">
-      <div class="frame">
-        <iframe
-          loading="lazy"
-          src="https://www.youtube-nocookie.com/embed/L5X48CaHQOE?rel=0"
-          title="Šumivé víno"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen></iframe>
-      </div>
-      <div class="cap">
-        <div class="name">Šumivé víno</div>
-        <div class="meta">// nejnovější drop</div>
-      </div>
-    </article>
-
-    <!-- 3 další -->
-    <div class="grid-3">
-      <article class="video">
+      <!-- Featured (nejnovější) -->
+      <article class="video featured" aria-label="Nejnovější video">
         <div class="frame">
-          <iframe loading="lazy"
-            src="https://www.youtube-nocookie.com/embed/DRjsyWVGXfs?rel=0"
-            title="Propaguji Boha"
+          <iframe
+            loading="lazy"
+            src="https://www.youtube-nocookie.com/embed/L5X48CaHQOE?rel=0"
+            title="Šumivé víno"
+            referrerpolicy="strict-origin-when-cross-origin"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen></iframe>
         </div>
         <div class="cap">
-          <div class="name">Propaguji Boha</div>
-          <div class="meta">// holy drill</div>
+          <div class="name">Šumivé víno</div>
+          <div class="meta">// nejnovější drop</div>
         </div>
       </article>
 
-      <article class="video">
-        <div class="frame">
-          <iframe loading="lazy"
-            src="https://www.youtube-nocookie.com/embed/tjN1KLocrQA?rel=0"
-            title="Rytmus Boží"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen></iframe>
-        </div>
-        <div class="cap">
-          <div class="name">Rytmus Boží</div>
-          <div class="meta">// rytmus, co drží</div>
-        </div>
-      </article>
+      <!-- 3 další -->
+      <div class="grid-3" aria-label="Další videa">
+        <article class="video">
+          <div class="frame">
+            <iframe loading="lazy"
+              src="https://www.youtube-nocookie.com/embed/DRjsyWVGXfs?rel=0"
+              title="Propaguji Boha"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </div>
+          <div class="cap">
+            <div class="name">Propaguji Boha</div>
+            <div class="meta">// holy drill</div>
+          </div>
+        </article>
 
-      <article class="video">
-        <div class="frame">
-          <iframe loading="lazy"
-            src="https://www.youtube-nocookie.com/embed/fZppEK3-OEY?rel=0"
-            title="Na poušti"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen></iframe>
-        </div>
-        <div class="cap">
-          <div class="name">Na poušti</div>
-          <div class="meta">// když je ticho nejhlasitější</div>
-        </div>
-      </article>
-    </div>
-  </section>
+        <article class="video">
+          <div class="frame">
+            <iframe loading="lazy"
+              src="https://www.youtube-nocookie.com/embed/tjN1KLocrQA?rel=0"
+              title="Rytmus Boží"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </div>
+          <div class="cap">
+            <div class="name">Rytmus Boží</div>
+            <div class="meta">// rytmus, co drží</div>
+          </div>
+        </article>
 
-  <section class="truth" id="slovo">
-    <h2 class="section-title">Slovo</h2>
-
-    <div class="truth-box">
-      <h3>Proč to dávám do rapu</h3>
-      <p>
-        Protože dnes je jednoduché mluvit nahlas… a přitom neříkat nic.
-        Já chci dělat hudbu, která má energii, ale také <b>směr</b>.
-      </p>
-      <p>
-        Když se kolem člověka točí šum, lži a pomluvy, je snadné se nechat strhnout.
-        Já se učím držet Slova — ne jako slogan, ale jako něco, co člověka vyčistí uvnitř.
-      </p>
-      <p>
-        Jestli chceš, napiš mi. Klidně skepticky, klidně na rovinu. Rozhovor je v pořádku.
-      </p>
-
-      <a class="dm" href="https://www.instagram.com/paynt__/" target="_blank" rel="noopener">Napsat DM na IG</a>
-
-      <div class="small">
-        Pokud chceš jen hudbu, respekt — nemusíš řešit nic dalšího.
+        <article class="video">
+          <div class="frame">
+            <iframe loading="lazy"
+              src="https://www.youtube-nocookie.com/embed/fZppEK3-OEY?rel=0"
+              title="Na poušti"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </div>
+          <div class="cap">
+            <div class="name">Na poušti</div>
+            <div class="meta">// když je ticho nejhlasitější</div>
+          </div>
+        </article>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section class="truth" id="slovo" aria-label="Slovo">
+      <h2 class="section-title">Slovo</h2>
+
+      <div class="truth-box">
+        <h3>Proč to dávám do rapu</h3>
+        <p>
+          Protože dnes je jednoduché mluvit nahlas… a přitom neříkat nic.
+          Já chci dělat hudbu, která má energii, ale také <b>směr</b>.
+        </p>
+        <p>
+          Když se kolem člověka točí šum, lži a pomluvy, je snadné se nechat strhnout.
+          Já se učím držet Slova — ne jako slogan, ale jako něco, co člověka vyčistí uvnitř.
+        </p>
+        <p>
+          Jestli chceš, napiš mi. Klidně skepticky, klidně na rovinu. Rozhovor je v pořádku.
+        </p>
+
+        <a class="dm" href="https://www.instagram.com/paynt__/" target="_blank" rel="noopener noreferrer">Napsat DM na IG</a>
+
+        <div class="small">
+          Pokud chceš jen hudbu, respekt — nemusíš řešit nic dalšího.
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer>
     <div>© <span id="year"></span> PAYNT</div>
@@ -534,4 +626,3 @@
   </script>
 </body>
 </html>
-
