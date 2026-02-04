@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://payntrecords-gif.github.io/PayntRecords/sitemap.xml
+
