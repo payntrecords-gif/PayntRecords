@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>PAYNT — Holy drill</title>
+  <meta name="author" content="PAYNT" />
   <meta name="description" content="PAYNT — holy drill z Prahy. Rap s Bohem: vážně i s nadhledem. Můj standard je Písmo." />
   <meta name="robots" content="index,follow" />
   <meta name="color-scheme" content="dark" />
@@ -68,6 +69,8 @@
       --my: 30vh;
 
       --scroll: 0%;
+      --maxw: 1180px;
+      --pad: 4vw;
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
@@ -81,6 +84,11 @@
     }
     a{color:inherit;text-decoration:none}
     img{max-width:100%;height:auto}
+
+    .wrap{
+      width:min(var(--maxw), calc(100% - (var(--pad) * 2)));
+      margin:0 auto;
+    }
 
     /* A11y */
     .skip{
@@ -169,7 +177,7 @@
       opacity:.9;
     }
 
-    /* Mobile menu button */
+    /* Mobile menu */
     .navbtn{
       display:none;
       align-items:center;
@@ -204,12 +212,7 @@
       pointer-events:auto;
     }
 
-    /* Mobile panel */
-    nav.panel{
-      display:none;
-      gap:1.2rem;
-      align-items:center;
-    }
+    nav.panel{ display:none; }
 
     /* Spotlight overlay (desktop only) */
     .spotlight{
@@ -231,19 +234,41 @@
       }
     }
 
+    /* Sections */
+    section{
+      padding:10vh 0;
+      border-top:1px solid rgba(255,255,255,.08);
+      position:relative;
+      z-index:10;
+    }
+    .section-title{
+      font-size:2.8rem;
+      text-transform:uppercase;
+      margin-bottom:2.0rem;
+      color:var(--accent);
+      letter-spacing:-0.02em;
+    }
+
+    /* content-visibility (below-the-fold) */
+    .cv{
+      content-visibility:auto;
+      contain-intrinsic-size: 900px;
+    }
+
     /* Hero */
     .hero{
       min-height:100vh;
+      padding-top: 118px;
+      border-top:none;
+    }
+    .hero-inner{
       display:grid;
       grid-template-columns:1.15fr .85fr;
       gap:3.2rem;
       align-items:center;
-      padding:0 4vw;
       position:relative;
-      z-index:10;
-      padding-top: 110px;
     }
-    .hero::before{
+    .hero-inner::before{
       content:"";
       position:absolute;
       inset:-90px;
@@ -255,8 +280,8 @@
       opacity:.95;
       pointer-events:none;
     }
-    .hero-text{position:relative; z-index:2}
 
+    .hero-text{position:relative; z-index:2}
     .micro{
       font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size:.78rem;
@@ -313,7 +338,6 @@
       flex-wrap:wrap;
       align-items:center;
     }
-
     .btn{
       display:inline-flex;
       align-items:center;
@@ -339,7 +363,6 @@
       border-color: transparent;
       box-shadow: 0 18px 55px rgba(0,245,255,.10);
     }
-
     @media (prefers-reduced-motion: no-preference){
       .btn::after{
         content:"";
@@ -422,21 +445,6 @@
       color: rgba(255,255,255,.85);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-    }
-
-    /* Sections */
-    section{
-      padding:10vh 4vw;
-      border-top:1px solid rgba(255,255,255,.08);
-      position:relative;
-      z-index:10;
-    }
-    .section-title{
-      font-size:2.8rem;
-      text-transform:uppercase;
-      margin-bottom:2.0rem;
-      color:var(--accent);
-      letter-spacing:-0.02em;
     }
 
     /* Video cards */
@@ -579,22 +587,6 @@
       color: rgba(255,255,255,.78);
       font-weight: 600;
     }
-    .truth p b{ color:var(--accent); font-weight:700; }
-
-    .dm{
-      display:inline-flex;
-      margin-top: 1.2rem;
-      padding: .95rem 1.3rem;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color:#000;
-      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      text-transform:uppercase;
-      letter-spacing:.06em;
-      border:none;
-      transition: transform .2s ease;
-    }
-    .dm:hover{ transform: translateY(-2px); }
 
     .small{
       font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -603,18 +595,77 @@
       margin-top:1rem;
     }
 
+    /* Contact */
+    .contact{
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00));
+    }
+    .contact-card{
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      padding: 1.6rem 1.6rem;
+      background: rgba(0,0,0,.25);
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:1rem;
+      flex-wrap:wrap;
+    }
+    .contact-card h3{
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:-0.02em;
+      font-size:1.6rem;
+      margin-bottom:.4rem;
+    }
+    .contact-card p{
+      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: rgba(255,255,255,.72);
+      line-height:1.6;
+      max-width: 60ch;
+    }
+
+    /* Footer */
     footer{
-      padding:3rem 4vw;
+      padding:3rem 0;
       border-top:1px solid rgba(255,255,255,.08);
+      color: rgba(255,255,255,.5);
+      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size:.82rem;
+      position:relative;
+      z-index:10;
+    }
+    .footer-inner{
       display:flex;
       justify-content:space-between;
       gap:1rem;
-      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size:.82rem;
-      color: rgba(255,255,255,.5);
       flex-wrap:wrap;
-      position:relative;
-      z-index:10;
+      align-items:center;
+    }
+
+    /* Toast */
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform: translateX(-50%) translateY(16px);
+      opacity:0;
+      pointer-events:none;
+      z-index:200;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.45);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius:999px;
+      padding:.65rem .95rem;
+      color: rgba(255,255,255,.92);
+      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size:.78rem;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .toast.show{
+      opacity:1;
+      transform: translateX(-50%) translateY(0);
     }
 
     /* Reveal */
@@ -628,7 +679,7 @@
 
     /* Hero drift */
     @media (prefers-reduced-motion: no-preference){
-      .hero::before{ animation: drift 14s ease-in-out infinite alternate; transform-origin: 50% 50%; }
+      .hero-inner::before{ animation: drift 14s ease-in-out infinite alternate; transform-origin: 50% 50%; }
       @keyframes drift{
         0%{ transform: translate3d(-1.5%,-1%,0) scale(1.02); filter: blur(18px); }
         100%{ transform: translate3d(1.5%,1%,0) scale(1.06); filter: blur(20px); }
@@ -673,9 +724,8 @@
 
     /* Mobile */
     @media (max-width: 980px){
-      .hero{ grid-template-columns:1fr; }
+      .hero-inner{ grid-template-columns:1fr; }
       .photo{ height:52vh; min-height:360px }
-
       .navbtn{ display:inline-flex; }
       nav.desktop{ display:none; }
 
@@ -708,6 +758,8 @@
         opacity:1;
         pointer-events:auto;
       }
+
+      .grid-3{ grid-template-columns:1fr; gap:1rem; }
     }
 
     @media (min-width: 981px){
@@ -724,10 +776,11 @@
   <header>
     <div class="logo">PAYNT</div>
 
-    <nav class="desktop" aria-label="Hlavní navigace" id="nav">
+    <nav class="desktop" aria-label="Hlavní navigace">
       <a href="#hudba" data-spy>HUDBA</a>
       <a href="#pribeh" data-spy>PŘÍBĚH</a>
       <a href="#slovo" data-spy>SLOVO</a>
+      <a href="#kontakt" data-spy>KONTAKT</a>
       <a href="https://www.youtube.com/@PayntRecords" target="_blank" rel="noopener noreferrer">YT</a>
     </nav>
 
@@ -748,6 +801,7 @@
     <a href="#hudba" data-spy>HUDBA</a>
     <a href="#pribeh" data-spy>PŘÍBĚH</a>
     <a href="#slovo" data-spy>SLOVO</a>
+    <a href="#kontakt" data-spy>KONTAKT</a>
     <a href="https://www.youtube.com/@PayntRecords" target="_blank" rel="noopener noreferrer">YT</a>
   </nav>
 
@@ -755,150 +809,200 @@
 
   <main>
     <section class="hero reveal" id="top" aria-label="Úvod">
-      <div class="hero-text">
-        <div class="micro"><b>HOLY DRILL</b> • Praha • PAYNT</div>
+      <div class="wrap">
+        <div class="hero-inner">
+          <div class="hero-text">
+            <div class="micro"><b>HOLY DRILL</b> • Praha • PAYNT</div>
 
-        <h1>
-          <span class="ghost">RAP S</span>
-          <span class="ghost">BOHEM</span>
-          <span class="solid">JE <span class="hl">COOL.</span></span>
-        </h1>
+            <h1>
+              <span class="ghost">RAP S</span>
+              <span class="ghost">BOHEM</span>
+              <span class="solid">JE <span class="hl">COOL.</span></span>
+            </h1>
 
-        <div class="sub">
-          Rap beru vážně. A zároveň si u něj nechávám nadhled.<br>
-          Nechci žít podle nálady. Můj standard je Písmo.
-        </div>
+            <div class="sub">
+              Rap beru vážně. A zároveň si u něj nechávám nadhled.<br>
+              Nechci žít podle nálady. Můj standard je Písmo.
+            </div>
 
-        <div class="cta">
-          <button class="btn btn-primary" type="button" onclick="location.href='#hudba'">Pusť poslední věci</button>
-          <a class="btn" href="#pribeh">Můj příběh</a>
-        </div>
-      </div>
-
-      <div class="photo" aria-label="Fotka">
-        <div class="photo-badge">LIVE / MIX / REAL</div>
-        <img
-          src="./paynt.jpg"
-          width="1184"
-          height="864"
-          alt="Paynt u mixpultu"
-          loading="eager"
-          decoding="async"
-          fetchpriority="high" />
-      </div>
-    </section>
-
-    <section id="hudba" class="reveal" aria-label="Hudba">
-      <h2 class="section-title">Hudba</h2>
-      <div class="small" style="margin-top:-.8rem; margin-bottom:1.2rem;">
-        Čerstvé uploady z kanálu. Bez hledání. Jen play.
-      </div>
-
-      <div id="latest-wrap" aria-live="polite">
-        <!-- pokud se latest.json nenačte, necháme tuhle elegantní fallback kartu -->
-        <article class="video featured">
-          <button class="yt" type="button" data-yt="null" disabled aria-label="Načítám videa…">
-            <span class="yt-thumb" style="background-image: radial-gradient(circle at 20% 25%, rgba(0,245,255,.22), transparent 45%), radial-gradient(circle at 85% 70%, rgba(255,43,214,.12), transparent 55%), linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,0));"></span>
-            <span class="yt-play" aria-hidden="true"></span>
-          </button>
-          <div class="cap">
-            <div class="name">Načítám nejnovější…</div>
-            <div class="meta">
-              <span>// moment</span>
-              <a href="https://www.youtube.com/@PayntRecords/videos" target="_blank" rel="noopener noreferrer">Otevřít kanál</a>
+            <div class="cta">
+              <button class="btn btn-primary" type="button" onclick="location.href='#hudba'">Pusť poslední věci</button>
+              <a class="btn" href="#pribeh">Můj příběh</a>
+              <button class="btn" id="sharebtn" type="button">Sdílet</button>
             </div>
           </div>
-        </article>
-      </div>
 
-      <noscript>
-        <div class="small">Tip: zapni JavaScript, aby se ti načetly 4 nejnovější videa jako karty.</div>
-      </noscript>
-    </section>
-
-    <section class="truth reveal" id="pribeh" aria-label="Příběh">
-      <h2 class="section-title">Příběh</h2>
-
-      <div class="truth-box">
-        <h3>Jaký jsem byl</h3>
-        <p>
-          Dřív jsem byl fakt nenaplněnej. Pesimistickej. Žádnej směr.
-          V hlavě mi jely otázky a strachy a upřímně… často jsem nevěděl, proč vůbec vstávat.
-        </p>
-        <p>
-          Nedokázal jsem být sám sebou. Emoce jsem měl jako kdyby zamknutý.
-          Byl jsem introvert a kamkoli jsem přišel, cítil jsem se napnutej — jako kdyby se každou chvíli mělo něco pokazit.
-          Nejvíc mě svazovalo, co si o mně myslí lidi.
-        </p>
-
-        <h3>Co se zlomilo</h3>
-        <p>
-          Zlomilo se to skrze Boží Slovo. Ne tak, že by ze dne na den zmizely všechny problémy.
-          Ale změnilo se to, na čem stojím. Přestal jsem být rukojmí toho, co zrovna cítím,
-          a toho, co se zrovna říká okolo.
-        </p>
-
-        <h3>Proč to dávám do rapu</h3>
-        <p>
-          Protože chci, aby to bylo slyšet normálně — živě, někdy vtipně.
-          Je v tom recese a nadsázka: občas to přestřelím schválně a ne všechno ber doslova.
-          Ale to hlavní myslím vážně.
-        </p>
-
-        <h3>Můj standard</h3>
-        <p>
-          Nechci, aby mě vedli lidi, emoce nebo myšlenky, co se mění podle tlaku a nálady.
-          Pro mě je standard Písmo — Bible. Když je všude šum, držím se Slova.
-        </p>
-
-        <a class="dm" href="https://www.instagram.com/paynt__/" target="_blank" rel="noopener noreferrer">Ozvi se na IG</a>
-        <div class="small">Klidně otázka, klidně nesouhlas. V pohodě oboje.</div>
+          <div class="photo" aria-label="Fotka">
+            <div class="photo-badge">LIVE / MIX / REAL</div>
+            <img
+              src="./paynt.jpg"
+              width="1184"
+              height="864"
+              alt="Paynt u mixpultu"
+              loading="eager"
+              decoding="async"
+              fetchpriority="high" />
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="truth reveal" id="slovo" aria-label="Slovo">
-      <h2 class="section-title">Slovo</h2>
-
-      <div class="truth-box">
-        <h3>Co tím vlastně myslím</h3>
-        <p>
-          Nechci z toho dělat “náboženskou pózu”. Spíš naopak:
-          mám rád věci, co jsou pravdivý, jednoduchý a drží i ve chvíli, kdy se člověk necítí silnej.
-        </p>
-
-        <h3>Proč nejdu podle pocitů</h3>
-        <p>
-          Pocity jsou reálný, ale nejsou stabilní. Někdy jsi nahoře, někdy dole.
-          A když to vezmeš podle toho, jak se zrovna cítíš, tak tě to jednou vystřelí a podruhý zlomí.
-          Já se učím vracet k tomu, co je pevný.
-        </p>
-
-        <h3>Hudba, humor a váha věcí</h3>
-        <p>
-          V trackách občas zní, že je to “jen sranda”.
-          A je. Protože humor je někdy nejlepší způsob, jak přežít tlak.
-          Ale zároveň se přes to snažím ukázat, že na směru záleží — že existuje pravda, která není jen “můj názor”.
-        </p>
-
-        <div class="cta">
-          <a class="btn btn-primary" href="#hudba">Pustit hudbu</a>
-          <a class="btn" href="https://www.youtube.com/@PayntRecords/videos" target="_blank" rel="noopener noreferrer">Všechna videa</a>
+    <section id="hudba" class="reveal cv" aria-label="Hudba">
+      <div class="wrap">
+        <h2 class="section-title">Hudba</h2>
+        <div class="small" style="margin-top:-.8rem; margin-bottom:1.2rem;">
+          Čerstvé uploady z kanálu. Bez hledání. Jen play.
         </div>
 
-        <div class="small">Pokud chceš jen poslech, úplně chápu. Pokud chceš řešit víc, taky v pohodě.</div>
+        <div id="latest-wrap" aria-live="polite">
+          <!-- Fallback: poslední uploady jako playlist (click-to-load) -->
+          <article class="video featured">
+            <button class="yt" type="button" data-ytlist="UUOp4T-ZmZP_b9JQQEw1YM3w" aria-label="Přehrát nejnovější uploady">
+              <span class="yt-thumb" style="background-image: radial-gradient(circle at 20% 25%, rgba(0,245,255,.22), transparent 45%), radial-gradient(circle at 85% 70%, rgba(255,43,214,.12), transparent 55%), linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,0));"></span>
+              <span class="yt-play" aria-hidden="true"></span>
+            </button>
+            <div class="cap">
+              <div class="name">Nejnovější z kanálu</div>
+              <div class="meta">
+                <span>// fallback</span>
+                <a href="https://www.youtube.com/@PayntRecords/videos" target="_blank" rel="noopener noreferrer">Otevřít kanál</a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <noscript>
+          <div class="small">Tip: zapni JavaScript, aby se ti načetly 4 nejnovější videa jako karty.</div>
+        </noscript>
+      </div>
+    </section>
+
+    <section class="truth reveal cv" id="pribeh" aria-label="Příběh">
+      <div class="wrap">
+        <h2 class="section-title">Příběh</h2>
+
+        <div class="truth-box">
+          <h3>Jaký jsem byl</h3>
+          <p>
+            Dřív jsem byl fakt nenaplněnej. Pesimistickej. Žádnej směr.
+            V hlavě mi jely otázky a strachy a upřímně… často jsem nevěděl, proč vůbec vstávat.
+          </p>
+          <p>
+            Nedokázal jsem být sám sebou. Emoce jsem měl jako kdyby zamknutý.
+            Byl jsem introvert a kamkoli jsem přišel, cítil jsem se napnutej — jako kdyby se každou chvíli mělo něco pokazit.
+            Nejvíc mě svazovalo, co si o mně myslí lidi.
+          </p>
+
+          <h3>Co se zlomilo</h3>
+          <p>
+            Zlomilo se to skrze Boží Slovo. Ne tak, že by ze dne na den zmizely všechny problémy.
+            Ale změnilo se to, na čem stojím. Přestal jsem být rukojmí toho, co zrovna cítím,
+            a toho, co se zrovna říká okolo.
+          </p>
+
+          <h3>Proč to dávám do rapu</h3>
+          <p>
+            Protože chci, aby to bylo slyšet normálně — živě, někdy vtipně.
+            Je v tom recese a nadsázka: občas to přestřelím schválně a ne všechno ber doslova.
+            Ale to hlavní myslím vážně.
+          </p>
+
+          <h3>Můj standard</h3>
+          <p>
+            Nechci, aby mě vedli lidi, emoce nebo myšlenky, co se mění podle tlaku a nálady.
+            Pro mě je standard Písmo — Bible. Když je všude šum, držím se Slova.
+          </p>
+
+          <div class="small">Jestli chceš něco řešit, kontakt je dole.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="truth reveal cv" id="slovo" aria-label="Slovo">
+      <div class="wrap">
+        <h2 class="section-title">Slovo</h2>
+
+        <div class="truth-box">
+          <h3>Co tím vlastně myslím</h3>
+          <p>
+            Nechci z toho dělat “náboženskou pózu”. Spíš naopak:
+            mám rád věci, co jsou pravdivý, jednoduchý a drží i ve chvíli, kdy se člověk necítí silnej.
+          </p>
+
+          <h3>Proč nejdu podle pocitů</h3>
+          <p>
+            Pocity jsou reálný, ale nejsou stabilní. Někdy jsi nahoře, někdy dole.
+            A když to vezmeš podle toho, jak se zrovna cítíš, tak tě to jednou vystřelí a podruhý zlomí.
+            Já se učím vracet k tomu, co je pevný.
+          </p>
+
+          <h3>Hudba, humor a váha věcí</h3>
+          <p>
+            V trackách občas zní, že je to “jen sranda”.
+            A je. Protože humor je někdy nejlepší způsob, jak přežít tlak.
+            Ale zároveň se přes to snažím ukázat, že na směru záleží — že existuje pravda, která není jen “můj názor”.
+          </p>
+
+          <div class="cta">
+            <a class="btn btn-primary" href="#hudba">Pustit hudbu</a>
+            <a class="btn" href="https://www.youtube.com/@PayntRecords/videos" target="_blank" rel="noopener noreferrer">Všechna videa</a>
+          </div>
+
+          <div class="small">Pokud chceš jen poslech, úplně chápu. Pokud chceš řešit víc, taky v pohodě.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact reveal cv" id="kontakt" aria-label="Kontakt">
+      <div class="wrap">
+        <h2 class="section-title">Kontakt</h2>
+
+        <div class="contact-card">
+          <div>
+            <h3>Jsem na příjmu</h3>
+            <p>
+              Nejrychlejší je IG DM. Pokud chceš spolupráci / beat / střih / cokoliv,
+              napiš a domluvíme se normálně.
+            </p>
+            <div class="small">Neřeším formu. Řeším respekt.</div>
+          </div>
+
+          <div class="cta" style="margin-top:.2rem;">
+            <a class="btn btn-primary" href="https://www.instagram.com/paynt__/" target="_blank" rel="noopener noreferrer">Napsat na IG</a>
+            <a class="btn" href="https://www.youtube.com/@PayntRecords" target="_blank" rel="noopener noreferrer">YouTube</a>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    <div>© <span id="year"></span> PAYNT</div>
-    <div>YouTube: @PayntRecords • Instagram: @paynt__</div>
+  <footer class="cv">
+    <div class="wrap">
+      <div class="footer-inner">
+        <div>© <span id="year"></span> PAYNT</div>
+        <div>YouTube: @PayntRecords • Instagram: @paynt__</div>
+      </div>
+    </div>
   </footer>
 
   <button class="totop" id="totop" type="button" aria-label="Zpět nahoru">NAHORU</button>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Toast helper
+    (function () {
+      const el = document.getElementById("toast");
+      let t = null;
+      window.toast = (msg) => {
+        if (!el) return;
+        el.textContent = msg;
+        el.classList.add("show");
+        clearTimeout(t);
+        t = setTimeout(() => el.classList.remove("show"), 1600);
+      };
+    })();
 
     // Spotlight (desktop mouse)
     (function () {
@@ -937,7 +1041,6 @@
         panel.classList.add("open");
         overlay.classList.add("show");
         overlay.setAttribute("aria-hidden", "false");
-        // focus first link for better UX
         const first = panel.querySelector("a");
         if (first) first.focus({ preventScroll:true });
       };
@@ -1016,9 +1119,66 @@
       toggle();
     })();
 
-    // Click-to-load YouTube (privacy-friendly + faster)
-    function mountYouTube(button, id, title) {
-      if (!id || id === "null") return;
+    // Share button (copy fallback)
+    (function () {
+      const btn = document.getElementById("sharebtn");
+      if (!btn) return;
+
+      async function copy(url) {
+        try {
+          await navigator.clipboard.writeText(url);
+          toast("Zkopírováno.");
+        } catch (e) {
+          toast("Nešlo zkopírovat.");
+        }
+      }
+
+      btn.addEventListener("click", async () => {
+        const url = location.href;
+        try {
+          if (navigator.share) {
+            await navigator.share({ title: document.title, url });
+          } else {
+            await copy(url);
+          }
+        } catch (e) {
+          // user cancel -> no drama
+        }
+      });
+    })();
+
+    // Warm third-party connections on first intent
+    (function () {
+      let warmed = false;
+      const origins = [
+        "https://www.youtube-nocookie.com",
+        "https://i.ytimg.com"
+      ];
+
+      function addPreconnect(href) {
+        const l = document.createElement("link");
+        l.rel = "preconnect";
+        l.href = href;
+        l.crossOrigin = "anonymous";
+        document.head.appendChild(l);
+      }
+
+      function warm() {
+        if (warmed) return;
+        warmed = true;
+        origins.forEach(addPreconnect);
+      }
+
+      window.warmYT = warm;
+      window.addEventListener("pointerdown", warm, { once:true, passive:true });
+      window.addEventListener("keydown", warm, { once:true });
+    })();
+
+    // Click-to-load YouTube
+    function mountYouTubeVideo(button, id, title) {
+      if (!id) return;
+      warmYT && warmYT();
+
       const wrap = document.createElement("div");
       wrap.style.aspectRatio = "16/9";
       wrap.style.background = "#000";
@@ -1032,6 +1192,29 @@
       iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
       iframe.title = title || "YouTube video";
       iframe.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id) + "?autoplay=1&rel=0";
+
+      wrap.appendChild(iframe);
+      button.replaceWith(wrap);
+      iframe.focus({ preventScroll:true });
+    }
+
+    function mountYouTubePlaylist(button, listId, title) {
+      if (!listId) return;
+      warmYT && warmYT();
+
+      const wrap = document.createElement("div");
+      wrap.style.aspectRatio = "16/9";
+      wrap.style.background = "#000";
+
+      const iframe = document.createElement("iframe");
+      iframe.width = "100%";
+      iframe.height = "100%";
+      iframe.loading = "lazy";
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.title = title || "YouTube playlist";
+      iframe.src = "https://www.youtube-nocookie.com/embed/videoseries?list=" + encodeURIComponent(listId) + "&autoplay=1";
 
       wrap.appendChild(iframe);
       button.replaceWith(wrap);
@@ -1067,6 +1250,8 @@
 
     async function loadLatest() {
       const wrap = document.getElementById("latest-wrap");
+      if (!wrap) return;
+
       try {
         const res = await fetch("./latest.json", { cache: "no-store" });
         if (!res.ok) return;
@@ -1087,18 +1272,26 @@
           </div>
         `;
 
-        // reveal (quick)
-        wrap.querySelectorAll(".reveal").forEach(el => el.classList.add("is-in"));
-
-        // mount click-to-load
+        // Mount click-to-load
         wrap.querySelectorAll(".yt").forEach(btn => {
-          btn.addEventListener("click", () => mountYouTube(btn, btn.dataset.yt, btn.getAttribute("aria-label") || "YouTube video"));
+          const id = btn.dataset.yt;
+          btn.addEventListener("click", () => mountYouTubeVideo(btn, id, btn.getAttribute("aria-label") || "YouTube video"));
+          btn.addEventListener("pointerenter", () => (warmYT && warmYT()), { passive:true });
         });
 
       } catch (e) {
         // keep fallback
       }
     }
+
+    // Bind fallback playlist click-to-load
+    (function () {
+      document.querySelectorAll(".yt[data-ytlist]").forEach(btn => {
+        const listId = btn.dataset.ytlist;
+        btn.addEventListener("click", () => mountYouTubePlaylist(btn, listId, btn.getAttribute("aria-label") || "YouTube playlist"));
+        btn.addEventListener("pointerenter", () => (warmYT && warmYT()), { passive:true });
+      });
+    })();
 
     loadLatest();
   </script>
