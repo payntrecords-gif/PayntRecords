@@ -11,8 +11,11 @@
   <meta name="theme-color" content="#05050a" />
   <link rel="canonical" href="https://payntrecords-gif.github.io/PayntRecords/" />
 
-  <!-- Preload hero image (rychlejší LCP) -->
+  <!-- Performance hints -->
+  <link rel="preconnect" href="https://fonts.bunny.net" crossorigin />
   <link rel="preload" as="image" href="./paynt.jpg" fetchpriority="high" />
+  <link rel="dns-prefetch" href="//www.youtube-nocookie.com" />
+  <link rel="dns-prefetch" href="//i.ytimg.com" />
 
   <!-- Open Graph -->
   <meta property="og:site_name" content="PAYNT" />
@@ -30,7 +33,6 @@
   <meta name="twitter:description" content="Rap s Bohem. Vážně i s nadhledem. Můj standard je Písmo." />
   <meta name="twitter:image" content="https://payntrecords-gif.github.io/PayntRecords/paynt.jpg" />
 
-  <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=syne:400,700,800|jetbrains-mono:400,600" rel="stylesheet" />
 
   <script type="application/ld+json">
@@ -62,9 +64,10 @@
 
       --radius:22px;
 
-      /* spotlight default */
       --mx: 50vw;
       --my: 30vh;
+
+      --scroll: 0%;
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
@@ -77,6 +80,7 @@
       cursor:crosshair;
     }
     a{color:inherit;text-decoration:none}
+    img{max-width:100%;height:auto}
 
     /* A11y */
     .skip{
@@ -86,39 +90,64 @@
       background:linear-gradient(135deg, var(--accent), var(--accent2));
       color:#000;
       font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      z-index:999;
+      z-index:9999;
     }
     .skip:focus{left:12px}
     :focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:10px}
+
+    /* Progress */
+    .progress{
+      position:fixed;
+      top:0; left:0;
+      width:100%;
+      height:3px;
+      z-index:9998;
+      background:
+        linear-gradient(90deg,
+          var(--accent) 0%,
+          var(--accent2) var(--scroll),
+          rgba(255,255,255,.10) var(--scroll),
+          rgba(255,255,255,.10) 100%);
+      opacity:.95;
+      pointer-events:none;
+    }
 
     /* Scrollbar */
     ::-webkit-scrollbar{width:8px}
     ::-webkit-scrollbar-track{background:#070711}
     ::-webkit-scrollbar-thumb{background:linear-gradient(180deg, var(--accent), var(--accent2))}
-
-    /* Selection */
     ::selection{ background: rgba(0,245,255,.25); color: var(--text); }
 
     /* Header */
     header{
       position:fixed;
-      top:18px; left:18px; right:18px;
+      top:14px; left:14px; right:14px;
       z-index:60;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      mix-blend-mode:exclusion;
+      gap:1rem;
+      padding:.85rem .95rem;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.25);
+      box-shadow: 0 18px 55px rgba(0,0,0,.35);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
     .logo{
       font-weight:800;
       letter-spacing:-1px;
       text-transform:uppercase;
-      font-size:1.45rem;
+      font-size:1.25rem;
       user-select:none;
+      white-space:nowrap;
     }
+
+    /* Desktop nav */
     nav{
       display:flex;
-      gap:1.4rem;
+      gap:1.2rem;
       font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size:.8rem;
       align-items:center;
@@ -129,10 +158,7 @@
       padding:.15rem .1rem;
     }
     nav a:hover{color:var(--accent); text-decoration:line-through}
-    nav a.active{
-      color:var(--accent);
-      text-decoration:none;
-    }
+    nav a.active{ color:var(--accent); text-decoration:none; }
     nav a.active::after{
       content:"";
       position:absolute;
@@ -141,6 +167,48 @@
       border-radius:999px;
       background: linear-gradient(90deg, var(--accent), var(--accent2));
       opacity:.9;
+    }
+
+    /* Mobile menu button */
+    .navbtn{
+      display:none;
+      align-items:center;
+      justify-content:center;
+      gap:.55rem;
+      padding:.65rem .9rem;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color: rgba(255,255,255,.9);
+      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size:.78rem;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      cursor:pointer;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .navbtn:hover{ border-color: rgba(0,245,255,.55); }
+
+    .overlay{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.55);
+      z-index:55;
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .2s ease;
+    }
+    .overlay.show{
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    /* Mobile panel */
+    nav.panel{
+      display:none;
+      gap:1.2rem;
+      align-items:center;
     }
 
     /* Spotlight overlay (desktop only) */
@@ -173,6 +241,7 @@
       padding:0 4vw;
       position:relative;
       z-index:10;
+      padding-top: 110px;
     }
     .hero::before{
       content:"";
@@ -186,7 +255,6 @@
       opacity:.95;
       pointer-events:none;
     }
-
     .hero-text{position:relative; z-index:2}
 
     .micro{
@@ -207,7 +275,6 @@
       letter-spacing:-0.03em;
       margin-bottom:1rem;
     }
-
     .hero-text .ghost{
       display:block;
       color:rgba(242,242,242,.16);
@@ -246,6 +313,7 @@
       flex-wrap:wrap;
       align-items:center;
     }
+
     .btn{
       display:inline-flex;
       align-items:center;
@@ -256,7 +324,7 @@
       font-size:.82rem;
       text-transform:uppercase;
       letter-spacing:.06em;
-      border:1px solid var(--border);
+      border:1px solid rgba(255,255,255,.14);
       transition: transform .2s ease, background .2s ease, border-color .2s ease, color .2s ease;
       cursor:pointer;
       background:transparent;
@@ -272,7 +340,6 @@
       box-shadow: 0 18px 55px rgba(0,245,255,.10);
     }
 
-    /* Button shine */
     @media (prefers-reduced-motion: no-preference){
       .btn::after{
         content:"";
@@ -292,7 +359,7 @@
       width:100%;
       height:78vh;
       min-height:520px;
-      border:1px solid var(--border2);
+      border:1px solid rgba(255,255,255,.08);
       border-radius:var(--radius);
       overflow:hidden;
       background:#0b0b14;
@@ -354,12 +421,13 @@
       font-size:.74rem;
       color: rgba(255,255,255,.85);
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
     /* Sections */
     section{
       padding:10vh 4vw;
-      border-top:1px solid var(--border2);
+      border-top:1px solid rgba(255,255,255,.08);
       position:relative;
       z-index:10;
     }
@@ -371,27 +439,24 @@
       letter-spacing:-0.02em;
     }
 
-    /* content-visibility for below-the-fold sections */
-    .cv{
-      content-visibility:auto;
-      contain-intrinsic-size: 900px;
-    }
-
     /* Video cards */
     .video{
       background: var(--surface);
-      border:1px solid var(--border2);
+      border:1px solid rgba(255,255,255,.08);
       border-radius:18px;
       overflow:hidden;
       transition: transform .25s ease, border-color .25s ease;
     }
     .video:hover{ transform: translateY(-6px); border-color: rgba(0,245,255,.55); }
-    .frame{ aspect-ratio:16/9; width:100%; display:block; background:#000; }
-    .video iframe{ width:100%; height:100%; border:0; display:block; }
+    .featured{ box-shadow: 0 22px 90px rgba(0,245,255,.06); }
+    .featured .cap{
+      background: linear-gradient(135deg, rgba(0,245,255,.08), rgba(255,43,214,.05));
+    }
+    .featured .name{ font-size:1.18rem }
 
     .cap{
       padding:.95rem 1.05rem 1.05rem;
-      border-top:1px solid var(--border2);
+      border-top:1px solid rgba(255,255,255,.08);
     }
     .cap .name{
       font-weight:800;
@@ -405,12 +470,20 @@
       font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size:.78rem;
       color:rgba(255,255,255,.55);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      flex-wrap:wrap;
     }
-    .featured{ box-shadow: 0 22px 90px rgba(0,245,255,.06); }
-    .featured .cap{
-      background: linear-gradient(135deg, rgba(0,245,255,.08), rgba(255,43,214,.05));
+    .cap .meta a{
+      text-decoration:underline;
+      text-decoration-thickness:2px;
+      text-underline-offset:3px;
+      opacity:.9;
     }
-    .featured .name{ font-size:1.18rem }
+    .cap .meta a:hover{ color:var(--accent); }
+
     .grid-3{
       margin-top:1.2rem;
       display:grid;
@@ -418,12 +491,73 @@
       gap:1.2rem;
     }
 
+    /* Click-to-load YouTube */
+    .yt{
+      width:100%;
+      border:0;
+      padding:0;
+      background:#000;
+      color:inherit;
+      display:block;
+      cursor:pointer;
+      position:relative;
+      aspect-ratio:16/9;
+    }
+    .yt:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; border-radius:12px; }
+    .yt-thumb{
+      position:absolute;
+      inset:0;
+      background-size:cover;
+      background-position:center;
+      filter: contrast(1.05) brightness(.9);
+      transform: scale(1.02);
+    }
+    .yt::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(135deg, rgba(0,245,255,.10), rgba(255,43,214,.06));
+      mix-blend-mode: screen;
+      opacity:.85;
+      pointer-events:none;
+    }
+    .yt-play{
+      position:absolute;
+      left:16px;
+      bottom:16px;
+      display:inline-flex;
+      align-items:center;
+      gap:.55rem;
+      padding:.55rem .75rem;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size:.78rem;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+    }
+    .yt-play::before{
+      content:"";
+      width:0;height:0;
+      border-left:10px solid var(--accent);
+      border-top:6px solid transparent;
+      border-bottom:6px solid transparent;
+      filter: drop-shadow(0 8px 25px rgba(0,245,255,.18));
+    }
+    .yt-play::after{
+      content:"Play";
+      color: rgba(255,255,255,.92);
+    }
+
     /* Text sections */
     .truth{ border-top:none; background:#070711; }
     .truth .section-title{ color:var(--text); }
     .truth-box{
       max-width: 980px;
-      border: 1px solid var(--border2);
+      border: 1px solid rgba(255,255,255,.08);
       border-radius: var(--radius);
       padding: 2rem 2.1rem;
       background: rgba(255,255,255,.03);
@@ -471,7 +605,7 @@
 
     footer{
       padding:3rem 4vw;
-      border-top:1px solid var(--border2);
+      border-top:1px solid rgba(255,255,255,.08);
       display:flex;
       justify-content:space-between;
       gap:1rem;
@@ -483,7 +617,7 @@
       z-index:10;
     }
 
-    /* Scroll reveal */
+    /* Reveal */
     .reveal{
       opacity:0;
       transform: translateY(18px);
@@ -508,13 +642,6 @@
       .spotlight{ display:none; }
     }
 
-    @media (max-width: 980px){
-      .hero{ grid-template-columns:1fr; padding-top:110px }
-      .photo{ height:52vh; min-height:360px }
-      header{ top:10px; left:10px; right:10px }
-      .grid-3{ grid-template-columns:1fr; gap:1rem; }
-    }
-
     /* Back to top */
     .totop{
       position:fixed;
@@ -524,12 +651,12 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      gap:.55rem;
       padding:.75rem 1rem;
       border-radius:999px;
       border:1px solid rgba(255,255,255,.14);
       background: rgba(0,0,0,.35);
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       color: rgba(255,255,255,.88);
       font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size:.78rem;
@@ -542,26 +669,87 @@
       transition: opacity .25s ease, transform .25s ease, border-color .25s ease;
     }
     .totop:hover{ border-color: rgba(0,245,255,.55); }
-    .totop.show{
-      opacity:1;
-      transform: translateY(0);
-      pointer-events:auto;
+    .totop.show{ opacity:1; transform: translateY(0); pointer-events:auto; }
+
+    /* Mobile */
+    @media (max-width: 980px){
+      .hero{ grid-template-columns:1fr; }
+      .photo{ height:52vh; min-height:360px }
+
+      .navbtn{ display:inline-flex; }
+      nav.desktop{ display:none; }
+
+      nav.panel{
+        position:fixed;
+        top:78px;
+        left:14px;
+        right:14px;
+        padding: 1rem 1rem;
+        border-radius: 18px;
+        border: 1px solid rgba(255,255,255,.10);
+        background: rgba(0,0,0,.55);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 18px 55px rgba(0,0,0,.45);
+
+        display:flex;
+        flex-direction:column;
+        align-items:flex-start;
+        gap:.9rem;
+
+        transform: translateY(-10px);
+        opacity:0;
+        pointer-events:none;
+        transition: opacity .2s ease, transform .2s ease;
+        z-index:59;
+      }
+      nav.panel.open{
+        transform: translateY(0);
+        opacity:1;
+        pointer-events:auto;
+      }
+    }
+
+    @media (min-width: 981px){
+      nav.desktop{ display:flex; }
+      nav.panel{ display:none; }
     }
   </style>
 </head>
 
 <body>
+  <div class="progress" aria-hidden="true"></div>
   <a class="skip" href="#hudba">Přeskočit na obsah</a>
 
   <header>
     <div class="logo">PAYNT</div>
-    <nav aria-label="Hlavní navigace" id="nav">
+
+    <nav class="desktop" aria-label="Hlavní navigace" id="nav">
       <a href="#hudba" data-spy>HUDBA</a>
       <a href="#pribeh" data-spy>PŘÍBĚH</a>
       <a href="#slovo" data-spy>SLOVO</a>
       <a href="https://www.youtube.com/@PayntRecords" target="_blank" rel="noopener noreferrer">YT</a>
     </nav>
+
+    <button
+      class="navbtn"
+      id="navbtn"
+      type="button"
+      aria-expanded="false"
+      aria-controls="navpanel"
+      aria-label="Otevřít menu">
+      MENU
+    </button>
   </header>
+
+  <div class="overlay" id="overlay" aria-hidden="true"></div>
+
+  <nav class="panel" id="navpanel" aria-label="Mobilní navigace">
+    <a href="#hudba" data-spy>HUDBA</a>
+    <a href="#pribeh" data-spy>PŘÍBĚH</a>
+    <a href="#slovo" data-spy>SLOVO</a>
+    <a href="https://www.youtube.com/@PayntRecords" target="_blank" rel="noopener noreferrer">YT</a>
+  </nav>
 
   <div class="spotlight" aria-hidden="true"></div>
 
@@ -600,33 +788,35 @@
       </div>
     </section>
 
-    <section id="hudba" class="reveal cv" aria-label="Hudba">
+    <section id="hudba" class="reveal" aria-label="Hudba">
       <h2 class="section-title">Hudba</h2>
       <div class="small" style="margin-top:-.8rem; margin-bottom:1.2rem;">
-        Čerstvý uploady z kanálu. Bez hledání. Jen play.
+        Čerstvé uploady z kanálu. Bez hledání. Jen play.
       </div>
 
-      <div id="latest-wrap">
-        <!-- Fallback: playlist uploadů -->
+      <div id="latest-wrap" aria-live="polite">
+        <!-- pokud se latest.json nenačte, necháme tuhle elegantní fallback kartu -->
         <article class="video featured">
-          <div class="frame">
-            <iframe
-              loading="lazy"
-              src="https://www.youtube-nocookie.com/embed/videoseries?list=UUOp4T-ZmZP_b9JQQEw1YM3w"
-              title="PAYNT — nejnovější uploady"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen></iframe>
-          </div>
+          <button class="yt" type="button" data-yt="null" disabled aria-label="Načítám videa…">
+            <span class="yt-thumb" style="background-image: radial-gradient(circle at 20% 25%, rgba(0,245,255,.22), transparent 45%), radial-gradient(circle at 85% 70%, rgba(255,43,214,.12), transparent 55%), linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,0));"></span>
+            <span class="yt-play" aria-hidden="true"></span>
+          </button>
           <div class="cap">
-            <div class="name">Nejnovější z kanálu</div>
-            <div class="meta">// fallback</div>
+            <div class="name">Načítám nejnovější…</div>
+            <div class="meta">
+              <span>// moment</span>
+              <a href="https://www.youtube.com/@PayntRecords/videos" target="_blank" rel="noopener noreferrer">Otevřít kanál</a>
+            </div>
           </div>
         </article>
       </div>
+
+      <noscript>
+        <div class="small">Tip: zapni JavaScript, aby se ti načetly 4 nejnovější videa jako karty.</div>
+      </noscript>
     </section>
 
-    <section class="truth reveal cv" id="pribeh" aria-label="Příběh">
+    <section class="truth reveal" id="pribeh" aria-label="Příběh">
       <h2 class="section-title">Příběh</h2>
 
       <div class="truth-box">
@@ -666,7 +856,7 @@
       </div>
     </section>
 
-    <section class="truth reveal cv" id="slovo" aria-label="Slovo">
+    <section class="truth reveal" id="slovo" aria-label="Slovo">
       <h2 class="section-title">Slovo</h2>
 
       <div class="truth-box">
@@ -700,7 +890,7 @@
     </section>
   </main>
 
-  <footer class="cv">
+  <footer>
     <div>© <span id="year"></span> PAYNT</div>
     <div>YouTube: @PayntRecords • Instagram: @paynt__</div>
   </footer>
@@ -713,27 +903,70 @@
     // Spotlight (desktop mouse)
     (function () {
       const root = document.documentElement;
-      let raf = null;
-      let lastX = 0, lastY = 0;
+      let raf = null, x = 0, y = 0;
+      function paint(){ raf = null; root.style.setProperty("--mx", x + "px"); root.style.setProperty("--my", y + "px"); }
+      window.addEventListener("mousemove", (e) => { x = e.clientX; y = e.clientY; if (!raf) raf = requestAnimationFrame(paint); }, { passive:true });
+    })();
 
+    // Scroll progress
+    (function () {
+      const root = document.documentElement;
+      let raf = null;
       function update() {
         raf = null;
-        root.style.setProperty("--mx", lastX + "px");
-        root.style.setProperty("--my", lastY + "px");
+        const doc = document.documentElement;
+        const scrollTop = doc.scrollTop || document.body.scrollTop || 0;
+        const height = doc.scrollHeight - doc.clientHeight;
+        const p = height > 0 ? (scrollTop / height) * 100 : 0;
+        root.style.setProperty("--scroll", p.toFixed(2) + "%");
       }
+      window.addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(update); }, { passive:true });
+      window.addEventListener("resize", () => { if (!raf) raf = requestAnimationFrame(update); }, { passive:true });
+      update();
+    })();
 
-      window.addEventListener("mousemove", (e) => {
-        lastX = e.clientX;
-        lastY = e.clientY;
-        if (!raf) raf = requestAnimationFrame(update);
-      }, { passive: true });
+    // Mobile menu (aria-expanded)
+    (function () {
+      const btn = document.getElementById("navbtn");
+      const panel = document.getElementById("navpanel");
+      const overlay = document.getElementById("overlay");
+      if (!btn || !panel || !overlay) return;
+
+      const open = () => {
+        btn.setAttribute("aria-expanded", "true");
+        panel.classList.add("open");
+        overlay.classList.add("show");
+        overlay.setAttribute("aria-hidden", "false");
+        // focus first link for better UX
+        const first = panel.querySelector("a");
+        if (first) first.focus({ preventScroll:true });
+      };
+
+      const close = () => {
+        btn.setAttribute("aria-expanded", "false");
+        panel.classList.remove("open");
+        overlay.classList.remove("show");
+        overlay.setAttribute("aria-hidden", "true");
+      };
+
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        expanded ? close() : open();
+      });
+
+      overlay.addEventListener("click", close);
+      window.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+      panel.querySelectorAll("a").forEach(a => a.addEventListener("click", close));
     })();
 
     // Scroll reveal
-    let io = null;
-    function setupRevealObserver() {
-      if (!("IntersectionObserver" in window)) return;
-      io = new IntersectionObserver((entries) => {
+    (function(){
+      const items = document.querySelectorAll(".reveal");
+      if (!("IntersectionObserver" in window)) {
+        items.forEach(el => el.classList.add("is-in"));
+        return;
+      }
+      const io = new IntersectionObserver((entries) => {
         entries.forEach(e => {
           if (e.isIntersecting) {
             e.target.classList.add("is-in");
@@ -741,28 +974,16 @@
           }
         });
       }, { threshold: 0.12 });
-    }
+      items.forEach(el => io.observe(el));
+    })();
 
-    function observeReveals(root = document) {
-      const els = root.querySelectorAll(".reveal:not(.is-in)");
-      if (!els.length) return;
-
-      if ("IntersectionObserver" in window) {
-        if (!io) setupRevealObserver();
-        els.forEach(el => io.observe(el));
-      } else {
-        els.forEach(el => el.classList.add("is-in"));
-      }
-    }
-
-    observeReveals();
-
-    // Scrollspy (aktivní položka v menu)
+    // Scrollspy (desktop + mobile)
     (function () {
-      const nav = document.getElementById("nav");
-      if (!nav || !("IntersectionObserver" in window)) return;
+      if (!("IntersectionObserver" in window)) return;
 
-      const links = Array.from(nav.querySelectorAll("a[data-spy]"));
+      const links = Array.from(document.querySelectorAll("a[data-spy]"))
+        .filter(a => a.getAttribute("href")?.startsWith("#"));
+
       const targets = links
         .map(a => document.querySelector(a.getAttribute("href")))
         .filter(Boolean);
@@ -783,28 +1004,67 @@
       }, { rootMargin: "-45% 0% -55% 0%", threshold: 0.01 });
 
       targets.forEach(t => spy.observe(t));
-
-      // default
       setActive("hudba");
     })();
 
     // Back to top
     (function () {
       const btn = document.getElementById("totop");
-      const toggle = () => {
-        const show = (window.scrollY || document.documentElement.scrollTop) > 700;
-        btn.classList.toggle("show", show);
-      };
-
-      btn.addEventListener("click", () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
-
-      window.addEventListener("scroll", toggle, { passive: true });
+      const toggle = () => btn.classList.toggle("show", (window.scrollY || document.documentElement.scrollTop) > 700);
+      btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+      window.addEventListener("scroll", toggle, { passive:true });
       toggle();
     })();
 
-    // 4 nejnovější videa z latest.json
+    // Click-to-load YouTube (privacy-friendly + faster)
+    function mountYouTube(button, id, title) {
+      if (!id || id === "null") return;
+      const wrap = document.createElement("div");
+      wrap.style.aspectRatio = "16/9";
+      wrap.style.background = "#000";
+
+      const iframe = document.createElement("iframe");
+      iframe.width = "100%";
+      iframe.height = "100%";
+      iframe.loading = "lazy";
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.title = title || "YouTube video";
+      iframe.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id) + "?autoplay=1&rel=0";
+
+      wrap.appendChild(iframe);
+      button.replaceWith(wrap);
+      iframe.focus({ preventScroll:true });
+    }
+
+    function escapeHtml(s){
+      return String(s || "").replace(/[&<>"']/g, (m) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
+    }
+
+    function videoCard(v, cls="", meta="") {
+      const id = v.id;
+      const title = v.title || "";
+      const yUrl = "https://www.youtube.com/watch?v=" + encodeURIComponent(id);
+      const thumb = "https://i.ytimg.com/vi/" + encodeURIComponent(id) + "/hqdefault.jpg";
+
+      return `
+        <article class="video ${cls}">
+          <button class="yt" type="button" data-yt="${escapeHtml(id)}" aria-label="Přehrát: ${escapeHtml(title)}">
+            <span class="yt-thumb" style="background-image:url('${thumb}')"></span>
+            <span class="yt-play" aria-hidden="true"></span>
+          </button>
+          <div class="cap">
+            <div class="name">${escapeHtml(title)}</div>
+            <div class="meta">
+              <span>${escapeHtml(meta)}</span>
+              <a href="${yUrl}" target="_blank" rel="noopener noreferrer">Otevřít na YouTube</a>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
     async function loadLatest() {
       const wrap = document.getElementById("latest-wrap");
       try {
@@ -818,39 +1078,25 @@
         const featured = items[0];
         const rest = items.slice(1);
 
-        const escapeHtml = (s) =>
-          String(s || "").replace(/[&<>"']/g, (m) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
-
-        const videoCard = (v, cls="", meta="") => `
-          <article class="video ${cls}">
-            <div class="frame">
-              <iframe
-                loading="lazy"
-                src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(v.id)}?rel=0"
-                title="${escapeHtml(v.title)}"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen></iframe>
-            </div>
-            <div class="cap">
-              <div class="name">${escapeHtml(v.title)}</div>
-              <div class="meta">${escapeHtml(meta)}</div>
-            </div>
-          </article>
-        `;
-
         const featuredMeta = featured.published ? `// nejnovější • ${featured.published.slice(0,10)}` : `// nejnovější`;
-        const html = `
+
+        wrap.innerHTML = `
           ${videoCard(featured, "featured reveal", featuredMeta)}
           <div class="grid-3" aria-label="Další nejnovější videa">
             ${rest.map(v => videoCard(v, "reveal", v.published ? `// ${v.published.slice(0,10)}` : `//`)).join("")}
           </div>
         `;
 
-        wrap.innerHTML = html;
-        observeReveals(wrap);
+        // reveal (quick)
+        wrap.querySelectorAll(".reveal").forEach(el => el.classList.add("is-in"));
+
+        // mount click-to-load
+        wrap.querySelectorAll(".yt").forEach(btn => {
+          btn.addEventListener("click", () => mountYouTube(btn, btn.dataset.yt, btn.getAttribute("aria-label") || "YouTube video"));
+        });
+
       } catch (e) {
-        // zůstane fallback
+        // keep fallback
       }
     }
 
