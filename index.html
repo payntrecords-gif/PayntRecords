@@ -10,32 +10,27 @@
   <meta name="color-scheme" content="dark" />
   <meta name="theme-color" content="#05050a" />
 
-  <!-- Canonical (důležité pro sdílení/SEO) -->
   <link rel="canonical" href="https://payntrecords-gif.github.io/PayntRecords/" />
 
-  <!-- Open Graph (náhledy při sdílení) -->
+  <!-- Open Graph -->
   <meta property="og:site_name" content="PAYNT" />
   <meta property="og:title" content="PAYNT — Holy drill" />
   <meta property="og:description" content="Rap s Bohem je cool. Slovo je oheň a vyčistí srdce." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="cs_CZ" />
   <meta property="og:url" content="https://payntrecords-gif.github.io/PayntRecords/" />
-  <meta property="og:image" content="https://payntrecords-gif.github.io/PayntRecords/photo_2026-02-04_11-58-59.jpg" />
+  <meta property="og:image" content="https://payntrecords-gif.github.io/PayntRecords/paynt.jpg" />
+  <meta property="og:image:alt" content="Paynt u mixpultu" />
 
-  <!-- Twitter cards (většinou využije OG, ale tohle je safe) -->
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="PAYNT — Holy drill" />
   <meta name="twitter:description" content="Rap s Bohem je cool. Když je všude šum, lži a pomluvy, držím se Slova." />
-  <meta name="twitter:image" content="https://payntrecords-gif.github.io/PayntRecords/photo_2026-02-04_11-58-59.jpg" />
-
-  <!-- (Volitelné) Favicon: když později přidáš favicon.svg/png do rootu, odkomentuj -->
-  <!-- <link rel="icon" href="favicon.svg" type="image/svg+xml"> -->
-  <!-- <link rel="icon" href="favicon.png" type="image/png"> -->
+  <meta name="twitter:image" content="https://payntrecords-gif.github.io/PayntRecords/paynt.jpg" />
 
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=syne:400,700,800|jetbrains-mono:400,600" rel="stylesheet" />
 
-  <!-- Structured data (jednoduché, neagresivní) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -56,11 +51,9 @@
       --text:#f2f2f2;
       --muted:rgba(242,242,242,.62);
 
-      /* Minimal neon: 1 hlavní + 1 vedlejší */
-      --accent:#00f5ff;     /* neon cyan */
-      --accent2:#ff2bd6;    /* hot pink */
+      --accent:#00f5ff;
+      --accent2:#ff2bd6;
 
-      --ink:#0a0a0f;
       --border:rgba(255,255,255,.14);
       --border2:rgba(255,255,255,.08);
       --shadow:0 18px 60px rgba(0,0,0,.55);
@@ -77,7 +70,6 @@
     }
     a{color:inherit;text-decoration:none}
 
-    /* Přístupnost: skip link + focus */
     .skip{
       position:absolute;
       left:-9999px;
@@ -97,12 +89,10 @@
       border-radius: 8px;
     }
 
-    /* Scrollbar */
     ::-webkit-scrollbar{width:8px}
     ::-webkit-scrollbar-track{background:#070711}
     ::-webkit-scrollbar-thumb{background:linear-gradient(180deg, var(--accent), var(--accent2))}
 
-    /* Header */
     header{
       position:fixed;
       top:18px; left:18px; right:18px;
@@ -127,7 +117,6 @@
     nav a{color:rgba(255,255,255,.9)}
     nav a:hover{color:var(--accent); text-decoration:line-through}
 
-    /* Hero */
     .hero{
       min-height:100vh;
       display:grid;
@@ -137,7 +126,6 @@
       padding:0 4vw;
       position:relative;
     }
-
     .hero::before{
       content:"";
       position:absolute;
@@ -172,7 +160,6 @@
       margin-bottom:1rem;
     }
 
-    /* Bez stroke (kvůli divným písmenům) */
     .hero-text .ghost{
       display:block;
       color:rgba(242,242,242,.16);
@@ -189,7 +176,6 @@
       color:var(--text);
       text-shadow: 0 14px 60px rgba(0,245,255,.08);
     }
-
     .solid .hl{
       color:var(--accent);
       text-shadow: 0 20px 70px rgba(0,245,255,.18);
@@ -237,7 +223,6 @@
       box-shadow: 0 18px 55px rgba(0,245,255,.10);
     }
 
-    /* Photo card (duotone + grain) */
     .photo{
       position:relative;
       width:100%;
@@ -250,8 +235,6 @@
       box-shadow: var(--shadow);
       z-index:2;
     }
-
-    /* IMG: responsive + méně layout shiftu */
     .photo img{
       width:100%;
       height:100%;
@@ -261,7 +244,6 @@
       transition: transform .55s ease, filter .55s ease;
       display:block;
     }
-
     .photo::before,
     .photo::after{
       content:"";
@@ -310,7 +292,6 @@
       backdrop-filter: blur(10px);
     }
 
-    /* Sections */
     section{
       padding:10vh 4vw;
       border-top:1px solid var(--border2);
@@ -324,7 +305,6 @@
       letter-spacing:-0.02em;
     }
 
-    /* Video cards */
     .video{
       background: var(--surface);
       border:1px solid var(--border2);
@@ -366,7 +346,6 @@
       color: rgba(255,255,255,.55);
     }
 
-    /* Featured layout */
     .featured{
       box-shadow: 0 22px 90px rgba(0,245,255,.06);
     }
@@ -382,14 +361,11 @@
       gap:1.2rem;
     }
 
-    /* Truth */
     .truth{
       border-top:none;
       background: #070711;
     }
-    .truth .section-title{
-      color: var(--text);
-    }
+    .truth .section-title{ color: var(--text); }
     .truth-box{
       max-width: 980px;
       border: 1px solid var(--border2);
@@ -413,10 +389,7 @@
       color: rgba(255,255,255,.78);
       font-weight: 600;
     }
-    .truth p b{
-      color: var(--accent);
-      font-weight: 700;
-    }
+    .truth p b{ color: var(--accent); font-weight: 700; }
     .truth .dm{
       display:inline-flex;
       margin-top: 1.2rem;
@@ -430,9 +403,7 @@
       border: none;
       transition: transform .2s ease;
     }
-    .truth .dm:hover{
-      transform: translateY(-2px);
-    }
+    .truth .dm:hover{ transform: translateY(-2px); }
     .truth .small{
       font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: .86rem;
@@ -452,7 +423,6 @@
       flex-wrap:wrap;
     }
 
-    /* Respekt pro lidi citlivé na animace */
     @media (prefers-reduced-motion: reduce){
       *{scroll-behavior:auto}
       .hero-text .ghost, .photo img, .btn{transition:none}
@@ -508,20 +478,23 @@
       <div class="photo" aria-label="Fotka">
         <div class="photo-badge">LIVE / MIX / REAL</div>
 
-        <!-- Profi: picture (WebP) + fallback JPG + width/height kvůli CLS -->
-        <picture>
-          <source srcset="./photo_2026-02-04_11-58-59.webp" type="image/webp" />
-          <img
-       <img src="./paynt.jpg" width="1184" height="864" alt="Paynt u mixpultu" />
-            decoding="async" />
-        </picture>
+        <img
+          src="paynt.jpg"
+          width="1184"
+          height="864"
+          alt="Paynt u mixpultu"
+          decoding="async"
+          onerror="this.style.display='none'; document.getElementById('imgfail').style.display='block';" />
+
+        <div id="imgfail" style="display:none; position:absolute; inset:0; padding:18px; color:rgba(255,255,255,.85); font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace; background:rgba(0,0,0,.45);">
+          Fotka se nenačetla. Ověř, že existuje: <a href="./paynt.jpg" style="text-decoration:underline;">paynt.jpg</a>
+        </div>
       </div>
     </section>
 
     <section id="hudba" aria-label="Hudba">
       <h2 class="section-title">Hudba</h2>
 
-      <!-- Featured (nejnovější) -->
       <article class="video featured" aria-label="Nejnovější video">
         <div class="frame">
           <iframe
@@ -538,7 +511,6 @@
         </div>
       </article>
 
-      <!-- 3 další -->
       <div class="grid-3" aria-label="Další videa">
         <article class="video">
           <div class="frame">
