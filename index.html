@@ -11,6 +11,9 @@
   <meta name="theme-color" content="#05050a" />
   <link rel="canonical" href="https://payntrecords-gif.github.io/PayntRecords/" />
 
+  <!-- Preload hero image (rychlejší LCP) -->
+  <link rel="preload" as="image" href="./paynt.jpg" fetchpriority="high" />
+
   <!-- Open Graph -->
   <meta property="og:site_name" content="PAYNT" />
   <meta property="og:title" content="PAYNT — Holy drill" />
@@ -30,7 +33,6 @@
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=syne:400,700,800|jetbrains-mono:400,600" rel="stylesheet" />
 
-  <!-- Structured data -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -59,6 +61,10 @@
       --shadow:0 18px 60px rgba(0,0,0,.55);
 
       --radius:22px;
+
+      /* spotlight default */
+      --mx: 50vw;
+      --my: 30vh;
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
@@ -90,11 +96,14 @@
     ::-webkit-scrollbar-track{background:#070711}
     ::-webkit-scrollbar-thumb{background:linear-gradient(180deg, var(--accent), var(--accent2))}
 
+    /* Selection */
+    ::selection{ background: rgba(0,245,255,.25); color: var(--text); }
+
     /* Header */
     header{
       position:fixed;
       top:18px; left:18px; right:18px;
-      z-index:50;
+      z-index:60;
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -105,15 +114,54 @@
       letter-spacing:-1px;
       text-transform:uppercase;
       font-size:1.45rem;
+      user-select:none;
     }
     nav{
       display:flex;
       gap:1.4rem;
       font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size:.8rem;
+      align-items:center;
     }
-    nav a{color:rgba(255,255,255,.9)}
+    nav a{
+      color:rgba(255,255,255,.9);
+      position:relative;
+      padding:.15rem .1rem;
+    }
     nav a:hover{color:var(--accent); text-decoration:line-through}
+    nav a.active{
+      color:var(--accent);
+      text-decoration:none;
+    }
+    nav a.active::after{
+      content:"";
+      position:absolute;
+      left:0; right:0; bottom:-.25rem;
+      height:2px;
+      border-radius:999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity:.9;
+    }
+
+    /* Spotlight overlay (desktop only) */
+    .spotlight{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:5;
+      opacity:0;
+    }
+    @media (pointer:fine) and (prefers-reduced-motion: no-preference){
+      .spotlight{
+        opacity:1;
+        background:
+          radial-gradient(600px circle at var(--mx) var(--my),
+            rgba(0,245,255,.10),
+            rgba(255,43,214,.05) 40%,
+            transparent 70%);
+        mix-blend-mode: screen;
+      }
+    }
 
     /* Hero */
     .hero{
@@ -124,6 +172,7 @@
       align-items:center;
       padding:0 4vw;
       position:relative;
+      z-index:10;
     }
     .hero::before{
       content:"";
@@ -312,6 +361,7 @@
       padding:10vh 4vw;
       border-top:1px solid var(--border2);
       position:relative;
+      z-index:10;
     }
     .section-title{
       font-size:2.8rem;
@@ -319,6 +369,12 @@
       margin-bottom:2.0rem;
       color:var(--accent);
       letter-spacing:-0.02em;
+    }
+
+    /* content-visibility for below-the-fold sections */
+    .cv{
+      content-visibility:auto;
+      contain-intrinsic-size: 900px;
     }
 
     /* Video cards */
@@ -423,6 +479,8 @@
       font-size:.82rem;
       color: rgba(255,255,255,.5);
       flex-wrap:wrap;
+      position:relative;
+      z-index:10;
     }
 
     /* Scroll reveal */
@@ -447,6 +505,7 @@
       .reveal{ opacity:1; transform:none; transition:none; }
       .btn, .photo img, .video{ transition:none; }
       html{ scroll-behavior:auto; }
+      .spotlight{ display:none; }
     }
 
     @media (max-width: 980px){
@@ -454,6 +513,39 @@
       .photo{ height:52vh; min-height:360px }
       header{ top:10px; left:10px; right:10px }
       .grid-3{ grid-template-columns:1fr; gap:1rem; }
+    }
+
+    /* Back to top */
+    .totop{
+      position:fixed;
+      right:16px;
+      bottom:16px;
+      z-index:80;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:.55rem;
+      padding:.75rem 1rem;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+      color: rgba(255,255,255,.88);
+      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size:.78rem;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      cursor:pointer;
+      transform: translateY(18px);
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .25s ease, transform .25s ease, border-color .25s ease;
+    }
+    .totop:hover{ border-color: rgba(0,245,255,.55); }
+    .totop.show{
+      opacity:1;
+      transform: translateY(0);
+      pointer-events:auto;
     }
   </style>
 </head>
@@ -463,13 +555,15 @@
 
   <header>
     <div class="logo">PAYNT</div>
-    <nav aria-label="Hlavní navigace">
-      <a href="#hudba">HUDBA</a>
-      <a href="#pribeh">PŘÍBĚH</a>
-      <a href="#slovo">SLOVO</a>
+    <nav aria-label="Hlavní navigace" id="nav">
+      <a href="#hudba" data-spy>HUDBA</a>
+      <a href="#pribeh" data-spy>PŘÍBĚH</a>
+      <a href="#slovo" data-spy>SLOVO</a>
       <a href="https://www.youtube.com/@PayntRecords" target="_blank" rel="noopener noreferrer">YT</a>
     </nav>
   </header>
+
+  <div class="spotlight" aria-hidden="true"></div>
 
   <main>
     <section class="hero reveal" id="top" aria-label="Úvod">
@@ -500,18 +594,20 @@
           width="1184"
           height="864"
           alt="Paynt u mixpultu"
-          decoding="async" />
+          loading="eager"
+          decoding="async"
+          fetchpriority="high" />
       </div>
     </section>
 
-    <section id="hudba" class="reveal" aria-label="Hudba">
+    <section id="hudba" class="reveal cv" aria-label="Hudba">
       <h2 class="section-title">Hudba</h2>
       <div class="small" style="margin-top:-.8rem; margin-bottom:1.2rem;">
         Čerstvý uploady z kanálu. Bez hledání. Jen play.
       </div>
 
       <div id="latest-wrap">
-        <!-- Fallback: playlist uploadů (automaticky aktualizovaný) -->
+        <!-- Fallback: playlist uploadů -->
         <article class="video featured">
           <div class="frame">
             <iframe
@@ -524,13 +620,13 @@
           </div>
           <div class="cap">
             <div class="name">Nejnovější z kanálu</div>
-            <div class="meta">// pokud se ti karty hned nenačtou, je tohle bezpečný fallback</div>
+            <div class="meta">// fallback</div>
           </div>
         </article>
       </div>
     </section>
 
-    <section class="truth reveal" id="pribeh" aria-label="Příběh">
+    <section class="truth reveal cv" id="pribeh" aria-label="Příběh">
       <h2 class="section-title">Příběh</h2>
 
       <div class="truth-box">
@@ -570,7 +666,7 @@
       </div>
     </section>
 
-    <section class="truth reveal" id="slovo" aria-label="Slovo">
+    <section class="truth reveal cv" id="slovo" aria-label="Slovo">
       <h2 class="section-title">Slovo</h2>
 
       <div class="truth-box">
@@ -596,7 +692,7 @@
 
         <div class="cta">
           <a class="btn btn-primary" href="#hudba">Pustit hudbu</a>
-          <a class="btn" href="https://www.youtube.com/@PayntRecords/videos" target="_blank" rel="noopener noreferrer">Všechny videa</a>
+          <a class="btn" href="https://www.youtube.com/@PayntRecords/videos" target="_blank" rel="noopener noreferrer">Všechna videa</a>
         </div>
 
         <div class="small">Pokud chceš jen poslech, úplně chápu. Pokud chceš řešit víc, taky v pohodě.</div>
@@ -604,13 +700,34 @@
     </section>
   </main>
 
-  <footer>
+  <footer class="cv">
     <div>© <span id="year"></span> PAYNT</div>
     <div>YouTube: @PayntRecords • Instagram: @paynt__</div>
   </footer>
 
+  <button class="totop" id="totop" type="button" aria-label="Zpět nahoru">NAHORU</button>
+
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Spotlight (desktop mouse)
+    (function () {
+      const root = document.documentElement;
+      let raf = null;
+      let lastX = 0, lastY = 0;
+
+      function update() {
+        raf = null;
+        root.style.setProperty("--mx", lastX + "px");
+        root.style.setProperty("--my", lastY + "px");
+      }
+
+      window.addEventListener("mousemove", (e) => {
+        lastX = e.clientX;
+        lastY = e.clientY;
+        if (!raf) raf = requestAnimationFrame(update);
+      }, { passive: true });
+    })();
 
     // Scroll reveal
     let io = null;
@@ -639,6 +756,53 @@
     }
 
     observeReveals();
+
+    // Scrollspy (aktivní položka v menu)
+    (function () {
+      const nav = document.getElementById("nav");
+      if (!nav || !("IntersectionObserver" in window)) return;
+
+      const links = Array.from(nav.querySelectorAll("a[data-spy]"));
+      const targets = links
+        .map(a => document.querySelector(a.getAttribute("href")))
+        .filter(Boolean);
+
+      function setActive(id) {
+        links.forEach(a => {
+          const active = a.getAttribute("href") === "#" + id;
+          a.classList.toggle("active", active);
+          if (active) a.setAttribute("aria-current", "page");
+          else a.removeAttribute("aria-current");
+        });
+      }
+
+      const spy = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && entry.target?.id) setActive(entry.target.id);
+        });
+      }, { rootMargin: "-45% 0% -55% 0%", threshold: 0.01 });
+
+      targets.forEach(t => spy.observe(t));
+
+      // default
+      setActive("hudba");
+    })();
+
+    // Back to top
+    (function () {
+      const btn = document.getElementById("totop");
+      const toggle = () => {
+        const show = (window.scrollY || document.documentElement.scrollTop) > 700;
+        btn.classList.toggle("show", show);
+      };
+
+      btn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      window.addEventListener("scroll", toggle, { passive: true });
+      toggle();
+    })();
 
     // 4 nejnovější videa z latest.json
     async function loadLatest() {
@@ -686,7 +850,7 @@
         wrap.innerHTML = html;
         observeReveals(wrap);
       } catch (e) {
-        // zůstane fallback playlist
+        // zůstane fallback
       }
     }
 
