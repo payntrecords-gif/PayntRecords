@@ -1,0 +1,58 @@
+name: Update latest videos
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate latest.json
+        run: |
+          python3 - << 'PY'
+          import json, urllib.request, xml.etree.ElementTree as ET
+
+          channel_id = "UCOp4T-ZmZP_b9JQQEw1YM3w"
+          url = f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
+
+          xml_data = urllib.request.urlopen(url).read()
+          root = ET.fromstring(xml_data)
+
+          ns = {
+            "atom": "http://www.w3.org/2005/Atom",
+            "yt": "http://www.youtube.com/xml/schemas/2015"
+          }
+
+          items = []
+          for entry in root.findall("atom:entry", ns)[:4]:
+            vid = entry.find("yt:videoId", ns)
+            title = entry.find("atom:title", ns)
+            published = entry.find("atom:published", ns)
+            if vid is None:
+              continue
+            items.append({
+              "id": (vid.text or "").strip(),
+              "title": (title.text or "").strip() if title is not None else "",
+              "published": (published.text or "").strip() if published is not None else ""
+            })
+
+          out = {"channelId": channel_id, "items": items}
+
+          with open("latest.json", "w", encoding="utf-8") as f:
+            json.dump(out, f, ensure_ascii=False, indent=2)
+          PY
+
+      - name: Commit changes (if any)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add latest.json
+          git diff --cached --quiet || git commit -m "Update latest videos"
+          git push
