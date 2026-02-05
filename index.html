@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>PAYNT — rap s Bohem</title>
-  <meta name="description" content="PAYNT — holy drill z Prahy. Hudba + víra bez nátlaku. Pro nevěřící, co chtějí pochopit, o co jde." />
+  <meta name="description" content="PAYNT — holy drill z Prahy. Hudba + víra vysvětlená normálně. Pro nevěřící, co chtějí pochopit, o co jde." />
   <meta name="robots" content="index,follow" />
   <meta name="color-scheme" content="dark" />
   <meta name="theme-color" content="#05050a" media="(prefers-color-scheme: dark)" />
@@ -26,7 +26,7 @@
   <!-- Social -->
   <meta property="og:site_name" content="PAYNT" />
   <meta property="og:title" content="PAYNT — rap s Bohem" />
-  <meta property="og:description" content="Hudba + víra bez nátlaku. Pro nevěřící, co chtějí pochopit, o co jde." />
+  <meta property="og:description" content="Hudba + víra vysvětlená normálně. Pro nevěřící, co chtějí pochopit, o co jde." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="cs_CZ" />
   <meta property="og:url" content="https://payntrecords-gif.github.io/PayntRecords/" />
@@ -34,7 +34,7 @@
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="PAYNT — rap s Bohem" />
-  <meta name="twitter:description" content="Hudba + víra bez nátlaku. Pro nevěřící, co chtějí pochopit, o co jde." />
+  <meta name="twitter:description" content="Hudba + víra vysvětlená normálně. Pro nevěřící, co chtějí pochopit, o co jde." />
   <meta name="twitter:image" content="https://payntrecords-gif.github.io/PayntRecords/paynt.jpg" />
 
   <link href="https://fonts.bunny.net/css?family=syne:400,700,800|jetbrains-mono:400,600" rel="stylesheet" />
@@ -46,7 +46,7 @@
     "@type":["Person","MusicGroup"],
     "name":"PAYNT",
     "url":"https://payntrecords-gif.github.io/PayntRecords/",
-    "description":"Holy drill z Prahy. Rap s Bohem (bez nátlaku).",
+    "description":"Holy drill z Prahy. Rap s Bohem.",
     "sameAs":[
       "https://www.instagram.com/paynt__/",
       "https://www.youtube.com/@PayntRecords"
@@ -73,6 +73,10 @@
       --pad: 4vw;
       --mx: 50vw;
       --my: 30vh;
+
+      /* Fokus fotky (kvůli obličeji) */
+      --face-x: 50%;
+      --face-y: 18%;
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
@@ -328,8 +332,8 @@
     .photo{
       position:relative; z-index:2;
       width:100%;
-      height:70vh;
-      min-height:460px;
+      height:66vh;
+      min-height:440px;
       border:1px solid rgba(255,255,255,.08);
       border-radius:var(--radius);
       overflow:hidden;
@@ -339,6 +343,7 @@
     .photo img{
       width:100%; height:100%;
       object-fit:cover;
+      object-position: var(--face-x) var(--face-y);
       filter: grayscale(100%) contrast(1.12) brightness(0.95);
       transform: scale(1.03);
       transition: transform .55s ease, filter .55s ease;
@@ -611,8 +616,10 @@
 
     /* Mobile */
     @media (max-width: 980px){
+      :root{ --face-y: 12%; }
+
       .hero-inner{ grid-template-columns:1fr; }
-      .photo{ height:50vh; min-height:340px }
+      .photo{ height:48vh; min-height:320px }
 
       .navbtn{ display:inline-flex; }
       nav.desktop{ display:none; }
@@ -704,12 +711,12 @@
             <h1>
               <span class="ghost">RAP S</span>
               <span class="ghost">BOHEM</span>
-              <span class="solid">BEZ <span class="hl">NÁTLAKU.</span></span>
+              <span class="solid">JE <span class="hl">COOL.</span></span>
             </h1>
 
             <div class="sub">
-              Jestli nevěříš: v pohodě. Tohle je jen otevřený vysvětlení, kdo jsem a proč věřím.<br>
-              Hudba je styl. Smysl je pravda.
+              Jestli nevěříš: v pohodě. Tohle je moje hudba a moje víra — vysvětlený normálně.<br>
+              Když chceš, ptej se. Když nechceš, i tak respekt.
             </div>
 
             <div class="cta">
@@ -720,13 +727,13 @@
             </div>
 
             <div class="small" style="margin-top:.9rem;">
-              Když ti to dává smysl, napiš mi 1 otázku. Když ne, i tak respekt.
+              Jestli chceš, napiš mi 1 otázku do DM. Klidně nesouhlas.
             </div>
           </div>
 
           <div class="photo" aria-label="Fotka">
             <div class="photo-badge">HOLY / DRILL / REAL</div>
-            <img src="./paynt.jpg" width="1184" height="864" alt="Paynt u mixpultu"
+            <img src="./paynt.jpg" width="1184" height="864" alt="PAYNT"
                  loading="eager" decoding="async" fetchpriority="high" />
           </div>
         </div>
@@ -737,7 +744,7 @@
       <div class="wrap">
         <h2 class="section-title">Hudba</h2>
         <div class="small" style="margin-top:-.7rem;">
-          Nejnovější věci (viditelné jako karty). Klik = přehrát tady na stránce.
+          Nejnovější věci. Klik = přehrát tady na stránce.
         </div>
 
         <div class="grid" id="videos" aria-live="polite"></div>
@@ -780,12 +787,12 @@
           <div class="card" role="listitem">
             <h3>Co udělal Bůh</h3>
             <p>
-              Věřím, že Ježíš přišel zachránit, ne ponížit. Ne „buď lepší“,
-              ale „pojď domů“. Bůh miluje a jedná.
+              Věřím, že Ježíš přišel zachránit. Bůh jedná, i když člověk nemá „výkon“.
+              Proto je to dobrá zpráva.
             </p>
             <div class="chips">
               <span class="chip">Jan 3:16</span>
-              <span class="chip">Milost</span>
+              <span class="chip">Řím 5:8</span>
               <span class="chip">Ježíš</span>
             </div>
           </div>
@@ -793,13 +800,13 @@
           <div class="card" role="listitem">
             <h3>Jak odpovědět</h3>
             <p>
-              Spása není výplata za výkon. Je to dar (milost).
+              Spása není výplata za snahu. Je to dar (milost).
               Další krok může být jednoduchý: upřímně se zeptat a hledat.
             </p>
             <div class="chips">
               <span class="chip">Ef 2:8–9</span>
               <span class="chip">Řím 10:9</span>
-              <span class="chip">Otázka</span>
+              <span class="chip">Hledání</span>
             </div>
           </div>
         </div>
@@ -810,7 +817,7 @@
         </div>
 
         <div class="small" style="margin-top:1rem;">
-          Nechci na tebe tlačit. Chci být fér, jasnej a otevřenej.
+          Nechci dělat pózu. Chci říct pravdu tak, aby to šlo pochopit.
         </div>
       </div>
     </section>
@@ -826,8 +833,8 @@
           <details class="faq-item">
             <summary>Nechci náboženství. Proč bych to řešil?</summary>
             <p>
-              Chápu. Taky nechci pózu. Věřím v pravdu, která drží i když je člověk dole.
-              A tohle je moje svědectví, ne marketing.
+              Chápu. Taky nechci pózu. Víra pro mě není “styl”, ale směr,
+              který drží, i když je člověk dole.
             </p>
           </details>
 
@@ -842,7 +849,7 @@
           <details class="faq-item">
             <summary>Co když mám v hlavě bordel a stud?</summary>
             <p>
-              To je přesně důvod, proč řeším milost. Ne „až budeš čistej“, ale „pojď“.
+              To je přesně důvod, proč řeším milost. Ne “až budeš čistej”, ale “pojď”.
               (Je to proces.)
             </p>
           </details>
@@ -850,8 +857,8 @@
           <details class="faq-item">
             <summary>Co ti mám napsat do DM?</summary>
             <p>
-              Napiš jen jednu větu: „Proč věříš?“ nebo „Jak se mám modlit, když nevím jak?“
-              nebo klidně „Nesouhlasím a chci pochopit.“
+              Napiš jednu větu: “Proč věříš?” nebo “Jak se mám modlit, když nevím jak?”
+              nebo “Nesouhlasím a chci pochopit.”
             </p>
           </details>
         </div>
@@ -867,7 +874,7 @@
       <div class="wrap">
         <h2 class="section-title">O mně</h2>
         <div class="small" style="margin-top:-.7rem;">
-          Když to pošleš v DM, ať je jasný „kdo je PAYNT“ během 10 sekund.
+          Ať je jasný „kdo je PAYNT“ během pár vteřin.
         </div>
 
         <div class="cards" role="list">
@@ -888,12 +895,11 @@
             <h3>Co ode mě čekat</h3>
             <p>
               V trackách může být nadsázka a styl. Ale směr je vážnej: pravda, naděje, změna.
-              Ne tlačení. Ne hate.
             </p>
             <div class="chips">
-              <span class="chip">Bez nátlaku</span>
+              <span class="chip">Pravda</span>
               <span class="chip">Naděje</span>
-              <span class="chip">Smysl</span>
+              <span class="chip">Změna</span>
             </div>
           </div>
 
@@ -948,16 +954,13 @@
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // ====== EDIT TADY: nejnovější songy ======
-    // Zkopíruj YouTube ID (11 znaků) z URL: https://www.youtube.com/watch?v=ID
+    // Nejnovější songy
     const VIDEOS = [
-  { id: "L5X48CaHQOE", title: "PAYNT — (Šumivé víno)", meta: "// nejnovější" },
-  { id: "tjN1KLocrQA", title: "PAYNT — (Rytmus Boží)", meta: "//" },
-  { id: "YTwOw8TTEpE", title: "PAYNT — (Příběh)", meta: "//" },
-  { id: "fZppEK3-OEY", title: "PAYNT — (Na Poušti)", meta: "//" }
-];
-
-    // =========================================
+      { id: "L5X48CaHQOE", title: "PAYNT — (Šumivé víno)", meta: "// nejnovější" },
+      { id: "tjN1KLocrQA", title: "PAYNT — (Rytmus Boží)", meta: "//" },
+      { id: "YTwOw8TTEpE", title: "PAYNT — (Příběh)", meta: "//" },
+      { id: "fZppEK3-OEY", title: "PAYNT — (Na Poušti)", meta: "//" }
+    ];
 
     // Toast
     (function () {
@@ -970,14 +973,6 @@
         clearTimeout(t);
         t = setTimeout(() => el.classList.remove("show"), 1600);
       };
-    })();
-
-    // Spotlight (desktop)
-    (function () {
-      const root = document.documentElement;
-      let raf = null, x = 0, y = 0;
-      function paint(){ raf = null; root.style.setProperty("--mx", x + "px"); root.style.setProperty("--my", y + "px"); }
-      window.addEventListener("mousemove", (e) => { x = e.clientX; y = e.clientY; if (!raf) raf = requestAnimationFrame(paint); }, { passive:true });
     })();
 
     // Scroll progress
@@ -995,6 +990,14 @@
       window.addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(update); }, { passive:true });
       window.addEventListener("resize", () => { if (!raf) raf = requestAnimationFrame(update); }, { passive:true });
       update();
+    })();
+
+    // Spotlight (desktop)
+    (function () {
+      const root = document.documentElement;
+      let raf = null, x = 0, y = 0;
+      function paint(){ raf = null; root.style.setProperty("--mx", x + "px"); root.style.setProperty("--my", y + "px"); }
+      window.addEventListener("mousemove", (e) => { x = e.clientX; y = e.clientY; if (!raf) raf = requestAnimationFrame(paint); }, { passive:true });
     })();
 
     // Mobile menu
@@ -1111,13 +1114,12 @@
       window.addEventListener("keydown", warm, { once:true });
     })();
 
-    // Render video cards (always visible)
+    // Render video cards
     function escapeHtml(s){
       return String(s || "").replace(/[&<>"']/g, (m) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
     }
 
     function thumbUrl(id){
-      // Primary + fallback domain (někdy pomůže v síti / extension)
       return {
         primary: "https://i.ytimg.com/vi/" + encodeURIComponent(id) + "/hqdefault.jpg",
         fallback: "https://img.youtube.com/vi/" + encodeURIComponent(id) + "/hqdefault.jpg"
@@ -1140,7 +1142,6 @@
       iframe.referrerPolicy = "strict-origin-when-cross-origin";
       iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
       iframe.title = title || "YouTube video";
-      // privacy-enhanced mode:
       iframe.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id) + "?autoplay=1&rel=0";
 
       wrap.appendChild(iframe);
@@ -1182,7 +1183,6 @@
       wrap.querySelectorAll(".yt-thumb").forEach(el => {
         const img = new Image();
         const primary = (el.style.backgroundImage || "").slice(5, -2);
-        img.onload = () => {};
         img.onerror = () => {
           const fb = el.getAttribute("data-fallback");
           if (fb) el.style.backgroundImage = "url('" + fb + "')";
