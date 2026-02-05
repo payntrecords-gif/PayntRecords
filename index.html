@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>PAYNT — Holy drill</title>
-  <meta name="description" content="Paynt — holy drill. Rap s Bohem. Když je všude šum, lži a pomluvy, držím se Slova." />
+  <meta name="description" content="PAYNT — holy drill z Prahy. Rap s Bohem: vážně i s nadhledem. Můj standard je Písmo." />
   <meta name="robots" content="index,follow" />
   <meta name="color-scheme" content="dark" />
   <meta name="theme-color" content="#05050a" />
@@ -14,7 +14,7 @@
   <!-- Open Graph -->
   <meta property="og:site_name" content="PAYNT" />
   <meta property="og:title" content="PAYNT — Holy drill" />
-  <meta property="og:description" content="Rap s Bohem je cool. Slovo je oheň a vyčistí srdce." />
+  <meta property="og:description" content="Rap s Bohem. Vážně i s nadhledem. Můj standard je Písmo." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="cs_CZ" />
   <meta property="og:url" content="https://payntrecords-gif.github.io/PayntRecords/" />
@@ -24,7 +24,7 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="PAYNT — Holy drill" />
-  <meta name="twitter:description" content="Rap s Bohem je cool. Když je všude šum, lži a pomluvy, držím se Slova." />
+  <meta name="twitter:description" content="Rap s Bohem. Vážně i s nadhledem. Můj standard je Písmo." />
   <meta name="twitter:image" content="https://payntrecords-gif.github.io/PayntRecords/paynt.jpg" />
 
   <link rel="preconnect" href="https://fonts.bunny.net">
@@ -51,8 +51,8 @@
       --text:#f2f2f2;
       --muted:rgba(242,242,242,.62);
 
-      --accent:#00f5ff;     /* neon cyan */
-      --accent2:#ff2bd6;    /* hot pink */
+      --accent:#00f5ff;
+      --accent2:#ff2bd6;
 
       --border:rgba(255,255,255,.14);
       --border2:rgba(255,255,255,.08);
@@ -72,7 +72,7 @@
     }
     a{color:inherit;text-decoration:none}
 
-    /* A11y: skip link + focus */
+    /* A11y */
     .skip{
       position:absolute; left:-9999px; top:10px;
       padding:.7rem 1rem;
@@ -159,7 +159,6 @@
       margin-bottom:1rem;
     }
 
-    /* No text-stroke */
     .hero-text .ghost{
       display:block;
       color:rgba(242,242,242,.16);
@@ -182,7 +181,7 @@
 
     .sub{
       margin-top:1.2rem;
-      max-width:590px;
+      max-width:620px;
       font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size:.92rem;
       line-height:1.65;
@@ -225,17 +224,17 @@
     }
 
     /* Button shine */
-    .btn::after{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background:linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
-      transform:translateX(-60%) rotate(12deg);
-      transition:transform 650ms ease;
-      pointer-events:none;
-    }
-    .btn:hover::after{
-      transform:translateX(60%) rotate(12deg);
+    @media (prefers-reduced-motion: no-preference){
+      .btn::after{
+        content:"";
+        position:absolute;
+        inset:-40%;
+        background:linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+        transform:translateX(-60%) rotate(12deg);
+        transition:transform 650ms ease;
+        pointer-events:none;
+      }
+      .btn:hover::after{ transform:translateX(60%) rotate(12deg); }
     }
 
     /* Photo */
@@ -331,7 +330,6 @@
       transition: transform .25s ease, border-color .25s ease;
     }
     .video:hover{ transform: translateY(-6px); border-color: rgba(0,245,255,.55); }
-
     .frame{ aspect-ratio:16/9; width:100%; display:block; background:#000; }
     .video iframe{ width:100%; height:100%; border:0; display:block; }
 
@@ -352,13 +350,11 @@
       font-size:.78rem;
       color:rgba(255,255,255,.55);
     }
-
     .featured{ box-shadow: 0 22px 90px rgba(0,245,255,.06); }
     .featured .cap{
       background: linear-gradient(135deg, rgba(0,245,255,.08), rgba(255,43,214,.05));
     }
     .featured .name{ font-size:1.18rem }
-
     .grid-3{
       margin-top:1.2rem;
       display:grid;
@@ -366,7 +362,7 @@
       gap:1.2rem;
     }
 
-    /* Text sections style */
+    /* Text sections */
     .truth{ border-top:none; background:#070711; }
     .truth .section-title{ color:var(--text); }
     .truth-box{
@@ -450,6 +446,7 @@
     @media (prefers-reduced-motion: reduce){
       .reveal{ opacity:1; transform:none; transition:none; }
       .btn, .photo img, .video{ transition:none; }
+      html{ scroll-behavior:auto; }
     }
 
     @media (max-width: 980px){
@@ -470,14 +467,14 @@
       <a href="#hudba">HUDBA</a>
       <a href="#pribeh">PŘÍBĚH</a>
       <a href="#slovo">SLOVO</a>
-      <a href="https://www.instagram.com/paynt__/" target="_blank" rel="noopener noreferrer">IG</a>
+      <a href="https://www.youtube.com/@PayntRecords" target="_blank" rel="noopener noreferrer">YT</a>
     </nav>
   </header>
 
   <main>
     <section class="hero reveal" id="top" aria-label="Úvod">
       <div class="hero-text">
-        <div class="micro"><b>HOLY DRILL</b> • Praha • Paynt</div>
+        <div class="micro"><b>HOLY DRILL</b> • Praha • PAYNT</div>
 
         <h1>
           <span class="ghost">RAP S</span>
@@ -486,13 +483,13 @@
         </h1>
 
         <div class="sub">
-          „Slovo je oheň a vyčistí srdce.“<br>
-          Když je všude šum, lži a pomluvy, držím se Slova.
+          Rap beru vážně. A zároveň si u něj nechávám nadhled.<br>
+          Nechci žít podle nálady. Můj standard je Písmo.
         </div>
 
         <div class="cta">
-          <button class="btn btn-primary" type="button" onclick="location.href='#hudba'">Pustit nejnovější</button>
-          <a class="btn" href="https://www.youtube.com/@PayntRecords" target="_blank" rel="noopener noreferrer">YouTube kanál</a>
+          <button class="btn btn-primary" type="button" onclick="location.href='#hudba'">Pusť poslední věci</button>
+          <a class="btn" href="#pribeh">Můj příběh</a>
         </div>
       </div>
 
@@ -509,13 +506,14 @@
 
     <section id="hudba" class="reveal" aria-label="Hudba">
       <h2 class="section-title">Hudba</h2>
+      <div class="small" style="margin-top:-.8rem; margin-bottom:1.2rem;">
+        Čerstvý uploady z kanálu. Bez hledání. Jen play.
+      </div>
 
-      <!-- Container pro 4 nejnovější (generuje JS z latest.json) -->
       <div id="latest-wrap">
-        <!-- fallback, kdyby latest.json ještě nebyl -->
+        <!-- Fallback: playlist uploadů (automaticky aktualizovaný) -->
         <article class="video featured">
           <div class="frame">
-            <!-- Fallback: playlist embed uploadů (automaticky aktualizovaný) -->
             <iframe
               loading="lazy"
               src="https://www.youtube-nocookie.com/embed/videoseries?list=UUOp4T-ZmZP_b9JQQEw1YM3w"
@@ -526,49 +524,49 @@
           </div>
           <div class="cap">
             <div class="name">Nejnovější z kanálu</div>
-            <div class="meta">// pokud vidíš tohle, web ještě nevygeneroval latest.json</div>
+            <div class="meta">// pokud se ti karty hned nenačtou, je tohle bezpečný fallback</div>
           </div>
         </article>
       </div>
-      
     </section>
 
     <section class="truth reveal" id="pribeh" aria-label="Příběh">
       <h2 class="section-title">Příběh</h2>
 
       <div class="truth-box">
-        <h3>Kdo jsem byl dřív</h3>
+        <h3>Jaký jsem byl</h3>
         <p>
-          Nebyl jsem naplněný. Byl jsem pesimistický, neznal jsem smysl života a často jsem měl pocit,
-          že nic nedává smysl. Hodně jsem se bál a nedokázal jsem být sám sebou.
+          Dřív jsem byl fakt nenaplněnej. Pesimistickej. Žádnej směr.
+          V hlavě mi jely otázky a strachy a upřímně… často jsem nevěděl, proč vůbec vstávat.
         </p>
         <p>
-          Emocím jsem skoro nerozuměl — jako kdyby byly „vypnuté“. Byl jsem introvert
-          a kamkoli jsem šel, cítil jsem se vyděšeně a nejistě. Silně mě svazovalo to,
-          co si o mně myslí druzí.
+          Nedokázal jsem být sám sebou. Emoce jsem měl jako kdyby zamknutý.
+          Byl jsem introvert a kamkoli jsem přišel, cítil jsem se napnutej — jako kdyby se každou chvíli mělo něco pokazit.
+          Nejvíc mě svazovalo, co si o mně myslí lidi.
         </p>
 
-        <h3>Co se změnilo</h3>
+        <h3>Co se zlomilo</h3>
         <p>
-          Skrze Boží Slovo jsem se od toho mohl postupně osvobodit — od strachu, od tlaku okolí i od toho,
-          co mi běželo v hlavě. Neříkám, že je všechno vždy jednoduché, ale změnil se můj základ.
+          Zlomilo se to skrze Boží Slovo. Ne tak, že by ze dne na den zmizely všechny problémy.
+          Ale změnilo se to, na čem stojím. Přestal jsem být rukojmí toho, co zrovna cítím,
+          a toho, co se zrovna říká okolo.
         </p>
 
         <h3>Proč to dávám do rapu</h3>
         <p>
-          Chci to sdílet i s jinými — a rap je pro mě způsob, jak to podat zajímavě, někdy i vtipně.
-          Je v tom i určitá recese: ne všechno, co řeknu, je myšlené úplně vážně.
-          Ale i tak je pro mě důležité ukázat, jak moc záleží na tom stát na správné straně.
+          Protože chci, aby to bylo slyšet normálně — živě, někdy vtipně.
+          Je v tom recese a nadsázka: občas to přestřelím schválně a ne všechno ber doslova.
+          Ale to hlavní myslím vážně.
         </p>
 
         <h3>Můj standard</h3>
         <p>
-          Jako standard života víry nechci mít lidi, emoce ani myšlenky. Pro mě je klíčové Písmo — Bible.
-          Když je všude šum, lži a pomluvy, držím se Slova.
+          Nechci, aby mě vedli lidi, emoce nebo myšlenky, co se mění podle tlaku a nálady.
+          Pro mě je standard Písmo — Bible. Když je všude šum, držím se Slova.
         </p>
 
-        <a class="dm" href="https://www.instagram.com/paynt__/" target="_blank" rel="noopener noreferrer">Napsat DM na IG</a>
-        <div class="small">Pokud chceš jen hudbu, respekt — nemusíš řešit nic dalšího.</div>
+        <a class="dm" href="https://www.instagram.com/paynt__/" target="_blank" rel="noopener noreferrer">Ozvi se na IG</a>
+        <div class="small">Klidně otázka, klidně nesouhlas. V pohodě oboje.</div>
       </div>
     </section>
 
@@ -576,34 +574,49 @@
       <h2 class="section-title">Slovo</h2>
 
       <div class="truth-box">
-        <h3>Proč to vůbec má smysl</h3>
+        <h3>Co tím vlastně myslím</h3>
         <p>
-          Dnes je jednoduché mluvit nahlas… a přitom neříkat nic.
-          Já chci dělat hudbu, která má energii, ale také <b>směr</b>.
-        </p>
-        <p>
-          Pokud tě zajímá víc (nebo máš otázky, i skeptické), klidně napiš.
-          Rozhovor je v pořádku.
+          Nechci z toho dělat “náboženskou pózu”. Spíš naopak:
+          mám rád věci, co jsou pravdivý, jednoduchý a drží i ve chvíli, kdy se člověk necítí silnej.
         </p>
 
-        <a class="dm" href="https://www.instagram.com/paynt__/" target="_blank" rel="noopener noreferrer">Napsat DM na IG</a>
-        <div class="small">P.S.: Jestli chceš jen hudbu — respekt.</div>
+        <h3>Proč nejdu podle pocitů</h3>
+        <p>
+          Pocity jsou reálný, ale nejsou stabilní. Někdy jsi nahoře, někdy dole.
+          A když to vezmeš podle toho, jak se zrovna cítíš, tak tě to jednou vystřelí a podruhý zlomí.
+          Já se učím vracet k tomu, co je pevný.
+        </p>
+
+        <h3>Hudba, humor a váha věcí</h3>
+        <p>
+          V trackách občas zní, že je to “jen sranda”.
+          A je. Protože humor je někdy nejlepší způsob, jak přežít tlak.
+          Ale zároveň se přes to snažím ukázat, že na směru záleží — že existuje pravda, která není jen “můj názor”.
+        </p>
+
+        <div class="cta">
+          <a class="btn btn-primary" href="#hudba">Pustit hudbu</a>
+          <a class="btn" href="https://www.youtube.com/@PayntRecords/videos" target="_blank" rel="noopener noreferrer">Všechny videa</a>
+        </div>
+
+        <div class="small">Pokud chceš jen poslech, úplně chápu. Pokud chceš řešit víc, taky v pohodě.</div>
       </div>
     </section>
   </main>
 
   <footer>
     <div>© <span id="year"></span> PAYNT</div>
-    <div>IG: @paynt__ • YT: @PayntRecords</div>
+    <div>YouTube: @PayntRecords • Instagram: @paynt__</div>
   </footer>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Scroll reveal (IntersectionObserver)
-    const items = document.querySelectorAll(".reveal");
-    if ("IntersectionObserver" in window) {
-      const io = new IntersectionObserver((entries) => {
+    // Scroll reveal
+    let io = null;
+    function setupRevealObserver() {
+      if (!("IntersectionObserver" in window)) return;
+      io = new IntersectionObserver((entries) => {
         entries.forEach(e => {
           if (e.isIntersecting) {
             e.target.classList.add("is-in");
@@ -611,22 +624,33 @@
           }
         });
       }, { threshold: 0.12 });
-      items.forEach(el => io.observe(el));
-    } else {
-      items.forEach(el => el.classList.add("is-in"));
     }
 
-    // 4 nejnovější videa z latest.json (vygeneruje workflow níže)
+    function observeReveals(root = document) {
+      const els = root.querySelectorAll(".reveal:not(.is-in)");
+      if (!els.length) return;
+
+      if ("IntersectionObserver" in window) {
+        if (!io) setupRevealObserver();
+        els.forEach(el => io.observe(el));
+      } else {
+        els.forEach(el => el.classList.add("is-in"));
+      }
+    }
+
+    observeReveals();
+
+    // 4 nejnovější videa z latest.json
     async function loadLatest() {
       const wrap = document.getElementById("latest-wrap");
       try {
         const res = await fetch("./latest.json", { cache: "no-store" });
         if (!res.ok) return;
+
         const data = await res.json();
         if (!data?.items?.length) return;
 
         const items = data.items.slice(0, 4);
-
         const featured = items[0];
         const rest = items.slice(1);
 
@@ -660,12 +684,9 @@
         `;
 
         wrap.innerHTML = html;
-
-        // znovu napoj reveal na nově vložené prvky
-        const newItems = wrap.querySelectorAll(".reveal");
-        newItems.forEach(el => el.classList.add("is-in"));
+        observeReveals(wrap);
       } catch (e) {
-        // když to spadne, zůstane fallback playlist
+        // zůstane fallback playlist
       }
     }
 
