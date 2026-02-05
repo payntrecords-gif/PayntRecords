@@ -9,7 +9,6 @@
   <meta name="robots" content="index,follow" />
   <meta name="color-scheme" content="dark" />
   <meta name="theme-color" content="#05050a" />
-
   <link rel="canonical" href="https://payntrecords-gif.github.io/PayntRecords/" />
 
   <!-- Open Graph -->
@@ -31,13 +30,14 @@
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=syne:400,700,800|jetbrains-mono:400,600" rel="stylesheet" />
 
+  <!-- Structured data -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "PAYNT",
-    "url": "https://payntrecords-gif.github.io/PayntRecords/",
-    "sameAs": [
+    "@context":"https://schema.org",
+    "@type":"Person",
+    "name":"PAYNT",
+    "url":"https://payntrecords-gif.github.io/PayntRecords/",
+    "sameAs":[
       "https://www.instagram.com/paynt__/",
       "https://www.youtube.com/@PayntRecords"
     ]
@@ -51,12 +51,14 @@
       --text:#f2f2f2;
       --muted:rgba(242,242,242,.62);
 
-      --accent:#00f5ff;
-      --accent2:#ff2bd6;
+      --accent:#00f5ff;     /* neon cyan */
+      --accent2:#ff2bd6;    /* hot pink */
 
       --border:rgba(255,255,255,.14);
       --border2:rgba(255,255,255,.08);
       --shadow:0 18px 60px rgba(0,0,0,.55);
+
+      --radius:22px;
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
@@ -70,10 +72,9 @@
     }
     a{color:inherit;text-decoration:none}
 
+    /* A11y: skip link + focus */
     .skip{
-      position:absolute;
-      left:-9999px;
-      top:10px;
+      position:absolute; left:-9999px; top:10px;
       padding:.7rem 1rem;
       border-radius:999px;
       background:linear-gradient(135deg, var(--accent), var(--accent2));
@@ -82,17 +83,14 @@
       z-index:999;
     }
     .skip:focus{left:12px}
+    :focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:10px}
 
-    :focus-visible{
-      outline: 2px solid var(--accent);
-      outline-offset: 3px;
-      border-radius: 8px;
-    }
-
+    /* Scrollbar */
     ::-webkit-scrollbar{width:8px}
     ::-webkit-scrollbar-track{background:#070711}
     ::-webkit-scrollbar-thumb{background:linear-gradient(180deg, var(--accent), var(--accent2))}
 
+    /* Header */
     header{
       position:fixed;
       top:18px; left:18px; right:18px;
@@ -117,6 +115,7 @@
     nav a{color:rgba(255,255,255,.9)}
     nav a:hover{color:var(--accent); text-decoration:line-through}
 
+    /* Hero */
     .hero{
       min-height:100vh;
       display:grid;
@@ -160,6 +159,7 @@
       margin-bottom:1rem;
     }
 
+    /* No text-stroke */
     .hero-text .ghost{
       display:block;
       color:rgba(242,242,242,.16);
@@ -170,7 +170,6 @@
       transform: translateX(8px) skewX(-10deg);
       letter-spacing: 0.01em;
     }
-
     .hero-text .solid{
       display:block;
       color:var(--text);
@@ -183,7 +182,7 @@
 
     .sub{
       margin-top:1.2rem;
-      max-width:560px;
+      max-width:590px;
       font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size:.92rem;
       line-height:1.65;
@@ -214,6 +213,8 @@
       cursor:pointer;
       background:transparent;
       color:rgba(255,255,255,.92);
+      position:relative;
+      overflow:hidden;
     }
     .btn:hover{transform: translateY(-2px); border-color:rgba(255,255,255,.32)}
     .btn-primary{
@@ -223,13 +224,28 @@
       box-shadow: 0 18px 55px rgba(0,245,255,.10);
     }
 
+    /* Button shine */
+    .btn::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+      transform:translateX(-60%) rotate(12deg);
+      transition:transform 650ms ease;
+      pointer-events:none;
+    }
+    .btn:hover::after{
+      transform:translateX(60%) rotate(12deg);
+    }
+
+    /* Photo */
     .photo{
       position:relative;
       width:100%;
       height:78vh;
       min-height:520px;
       border:1px solid var(--border2);
-      border-radius:22px;
+      border-radius:var(--radius);
       overflow:hidden;
       background:#0b0b14;
       box-shadow: var(--shadow);
@@ -292,6 +308,7 @@
       backdrop-filter: blur(10px);
     }
 
+    /* Sections */
     section{
       padding:10vh 4vw;
       border-top:1px solid var(--border2);
@@ -305,6 +322,7 @@
       letter-spacing:-0.02em;
     }
 
+    /* Video cards */
     .video{
       background: var(--surface);
       border:1px solid var(--border2);
@@ -312,25 +330,14 @@
       overflow:hidden;
       transition: transform .25s ease, border-color .25s ease;
     }
-    .video:hover{
-      transform: translateY(-6px);
-      border-color: rgba(0,245,255,.55);
-    }
-    .frame{
-      aspect-ratio:16/9;
-      width:100%;
-      display:block;
-      background:#000;
-    }
-    .video iframe{
-      width:100%;
-      height:100%;
-      border:0;
-      display:block;
-    }
+    .video:hover{ transform: translateY(-6px); border-color: rgba(0,245,255,.55); }
+
+    .frame{ aspect-ratio:16/9; width:100%; display:block; background:#000; }
+    .video iframe{ width:100%; height:100%; border:0; display:block; }
+
     .cap{
-      padding: .95rem 1.05rem 1.05rem;
-      border-top: 1px solid var(--border2);
+      padding:.95rem 1.05rem 1.05rem;
+      border-top:1px solid var(--border2);
     }
     .cap .name{
       font-weight:800;
@@ -338,105 +345,118 @@
       letter-spacing:-0.01em;
       font-size:1.05rem;
       margin-bottom:.35rem;
-      color: rgba(255,255,255,.95);
+      color:rgba(255,255,255,.95);
     }
     .cap .meta{
       font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size:.78rem;
-      color: rgba(255,255,255,.55);
+      color:rgba(255,255,255,.55);
     }
 
-    .featured{
-      box-shadow: 0 22px 90px rgba(0,245,255,.06);
-    }
+    .featured{ box-shadow: 0 22px 90px rgba(0,245,255,.06); }
     .featured .cap{
       background: linear-gradient(135deg, rgba(0,245,255,.08), rgba(255,43,214,.05));
     }
-    .featured .name{font-size:1.18rem}
+    .featured .name{ font-size:1.18rem }
 
     .grid-3{
-      margin-top: 1.2rem;
+      margin-top:1.2rem;
       display:grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
+      grid-template-columns:repeat(3, minmax(0,1fr));
       gap:1.2rem;
     }
 
-    .truth{
-      border-top:none;
-      background: #070711;
-    }
-    .truth .section-title{ color: var(--text); }
+    /* Text sections style */
+    .truth{ border-top:none; background:#070711; }
+    .truth .section-title{ color:var(--text); }
     .truth-box{
       max-width: 980px;
       border: 1px solid var(--border2);
-      border-radius: 22px;
+      border-radius: var(--radius);
       padding: 2rem 2.1rem;
       background: rgba(255,255,255,.03);
       box-shadow: 0 18px 70px rgba(0,0,0,.35);
     }
     .truth h3{
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      line-height: 1.05;
+      font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+      line-height:1.1;
       text-transform: uppercase;
-      margin-bottom: 1.1rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
+      margin: 1.3rem 0 .7rem;
+      font-weight:800;
+      letter-spacing:-0.02em;
     }
+    .truth h3:first-of-type{ margin-top:0; }
     .truth p{
-      font-size: 1.06rem;
-      line-height: 1.75;
+      font-size: 1.05rem;
+      line-height: 1.78;
       margin-bottom: 1rem;
       color: rgba(255,255,255,.78);
       font-weight: 600;
     }
-    .truth p b{ color: var(--accent); font-weight: 700; }
-    .truth .dm{
+    .truth p b{ color:var(--accent); font-weight:700; }
+
+    .dm{
       display:inline-flex;
       margin-top: 1.2rem;
       padding: .95rem 1.3rem;
       border-radius: 999px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #000;
+      color:#000;
       font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      border: none;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      border:none;
       transition: transform .2s ease;
     }
-    .truth .dm:hover{ transform: translateY(-2px); }
-    .truth .small{
+    .dm:hover{ transform: translateY(-2px); }
+
+    .small{
       font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: .86rem;
-      opacity: .72;
-      margin-top: 1rem;
+      font-size:.86rem;
+      opacity:.72;
+      margin-top:1rem;
     }
 
     footer{
-      padding: 3rem 4vw;
-      border-top: 1px solid var(--border2);
+      padding:3rem 4vw;
+      border-top:1px solid var(--border2);
       display:flex;
       justify-content:space-between;
-      gap: 1rem;
+      gap:1rem;
       font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size:.82rem;
       color: rgba(255,255,255,.5);
       flex-wrap:wrap;
     }
 
+    /* Scroll reveal */
+    .reveal{
+      opacity:0;
+      transform: translateY(18px);
+      transition: opacity 700ms ease, transform 700ms ease;
+      will-change: opacity, transform;
+    }
+    .reveal.is-in{ opacity:1; transform:none; }
+
+    /* Hero drift */
+    @media (prefers-reduced-motion: no-preference){
+      .hero::before{ animation: drift 14s ease-in-out infinite alternate; transform-origin: 50% 50%; }
+      @keyframes drift{
+        0%{ transform: translate3d(-1.5%,-1%,0) scale(1.02); filter: blur(18px); }
+        100%{ transform: translate3d(1.5%,1%,0) scale(1.06); filter: blur(20px); }
+      }
+    }
+
     @media (prefers-reduced-motion: reduce){
-      *{scroll-behavior:auto}
-      .hero-text .ghost, .photo img, .btn{transition:none}
-      .hero-text .ghost:hover{transform:none}
-      .btn:hover{transform:none}
-      .photo:hover img{transform:scale(1.03)}
-      .video:hover{transform:none}
+      .reveal{ opacity:1; transform:none; transition:none; }
+      .btn, .photo img, .video{ transition:none; }
     }
 
     @media (max-width: 980px){
-      .hero{grid-template-columns:1fr; padding-top:110px}
-      .photo{height:52vh; min-height:360px}
-      header{top:10px; left:10px; right:10px}
-      .grid-3{grid-template-columns:1fr; gap:1rem;}
+      .hero{ grid-template-columns:1fr; padding-top:110px }
+      .photo{ height:52vh; min-height:360px }
+      header{ top:10px; left:10px; right:10px }
+      .grid-3{ grid-template-columns:1fr; gap:1rem; }
     }
   </style>
 </head>
@@ -448,13 +468,14 @@
     <div class="logo">PAYNT</div>
     <nav aria-label="Hlavní navigace">
       <a href="#hudba">HUDBA</a>
+      <a href="#pribeh">PŘÍBĚH</a>
       <a href="#slovo">SLOVO</a>
       <a href="https://www.instagram.com/paynt__/" target="_blank" rel="noopener noreferrer">IG</a>
     </nav>
   </header>
 
   <main>
-    <section class="hero" id="top" aria-label="Úvod">
+    <section class="hero reveal" id="top" aria-label="Úvod">
       <div class="hero-text">
         <div class="micro"><b>HOLY DRILL</b> • Praha • Paynt</div>
 
@@ -477,110 +498,99 @@
 
       <div class="photo" aria-label="Fotka">
         <div class="photo-badge">LIVE / MIX / REAL</div>
-
         <img
-          src="paynt.jpg"
+          src="./paynt.jpg"
           width="1184"
           height="864"
           alt="Paynt u mixpultu"
-          decoding="async"
-          onerror="this.style.display='none'; document.getElementById('imgfail').style.display='block';" />
-
-        <div id="imgfail" style="display:none; position:absolute; inset:0; padding:18px; color:rgba(255,255,255,.85); font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace; background:rgba(0,0,0,.45);">
-          Fotka se nenačetla. Ověř, že existuje: <a href="./paynt.jpg" style="text-decoration:underline;">paynt.jpg</a>
-        </div>
+          decoding="async" />
       </div>
     </section>
 
-    <section id="hudba" aria-label="Hudba">
+    <section id="hudba" class="reveal" aria-label="Hudba">
       <h2 class="section-title">Hudba</h2>
 
-      <article class="video featured" aria-label="Nejnovější video">
-        <div class="frame">
-          <iframe
-            loading="lazy"
-            src="https://www.youtube-nocookie.com/embed/L5X48CaHQOE?rel=0"
-            title="Šumivé víno"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen></iframe>
-        </div>
-        <div class="cap">
-          <div class="name">Šumivé víno</div>
-          <div class="meta">// nejnovější drop</div>
-        </div>
-      </article>
-
-      <div class="grid-3" aria-label="Další videa">
-        <article class="video">
+      <!-- Container pro 4 nejnovější (generuje JS z latest.json) -->
+      <div id="latest-wrap">
+        <!-- fallback, kdyby latest.json ještě nebyl -->
+        <article class="video featured">
           <div class="frame">
-            <iframe loading="lazy"
-              src="https://www.youtube-nocookie.com/embed/DRjsyWVGXfs?rel=0"
-              title="Propaguji Boha"
+            <!-- Fallback: playlist embed uploadů (automaticky aktualizovaný) -->
+            <iframe
+              loading="lazy"
+              src="https://www.youtube-nocookie.com/embed/videoseries?list=UUOp4T-ZmZP_b9JQQEw1YM3w"
+              title="PAYNT — nejnovější uploady"
               referrerpolicy="strict-origin-when-cross-origin"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowfullscreen></iframe>
           </div>
           <div class="cap">
-            <div class="name">Propaguji Boha</div>
-            <div class="meta">// holy drill</div>
-          </div>
-        </article>
-
-        <article class="video">
-          <div class="frame">
-            <iframe loading="lazy"
-              src="https://www.youtube-nocookie.com/embed/tjN1KLocrQA?rel=0"
-              title="Rytmus Boží"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen></iframe>
-          </div>
-          <div class="cap">
-            <div class="name">Rytmus Boží</div>
-            <div class="meta">// rytmus, co drží</div>
-          </div>
-        </article>
-
-        <article class="video">
-          <div class="frame">
-            <iframe loading="lazy"
-              src="https://www.youtube-nocookie.com/embed/fZppEK3-OEY?rel=0"
-              title="Na poušti"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen></iframe>
-          </div>
-          <div class="cap">
-            <div class="name">Na poušti</div>
-            <div class="meta">// když je ticho nejhlasitější</div>
+            <div class="name">Nejnovější z kanálu</div>
+            <div class="meta">// pokud vidíš tohle, web ještě nevygeneroval latest.json</div>
           </div>
         </article>
       </div>
+
+      <div class="small" style="margin-top:1.2rem;">
+        Chceš víc videí? Napiš mi a rozšíříme to na 6 nebo 8.
+      </div>
     </section>
 
-    <section class="truth" id="slovo" aria-label="Slovo">
-      <h2 class="section-title">Slovo</h2>
+    <section class="truth reveal" id="pribeh" aria-label="Příběh">
+      <h2 class="section-title">Příběh</h2>
 
       <div class="truth-box">
+        <h3>Kdo jsem byl dřív</h3>
+        <p>
+          Nebyl jsem naplněný. Byl jsem pesimistický, neznal jsem smysl života a často jsem měl pocit,
+          že nic nedává smysl. Hodně jsem se bál a nedokázal jsem být sám sebou.
+        </p>
+        <p>
+          Emocím jsem skoro nerozuměl — jako kdyby byly „vypnuté“. Byl jsem introvert
+          a kamkoli jsem šel, cítil jsem se vyděšeně a nejistě. Silně mě svazovalo to,
+          co si o mně myslí druzí.
+        </p>
+
+        <h3>Co se změnilo</h3>
+        <p>
+          Skrze Boží Slovo jsem se od toho mohl postupně osvobodit — od strachu, od tlaku okolí i od toho,
+          co mi běželo v hlavě. Neříkám, že je všechno vždy jednoduché, ale změnil se můj základ.
+        </p>
+
         <h3>Proč to dávám do rapu</h3>
         <p>
-          Protože dnes je jednoduché mluvit nahlas… a přitom neříkat nic.
-          Já chci dělat hudbu, která má energii, ale také <b>směr</b>.
+          Chci to sdílet i s jinými — a rap je pro mě způsob, jak to podat zajímavě, někdy i vtipně.
+          Je v tom i určitá recese: ne všechno, co řeknu, je myšlené úplně vážně.
+          Ale i tak je pro mě důležité ukázat, jak moc záleží na tom stát na správné straně.
         </p>
+
+        <h3>Můj standard</h3>
         <p>
-          Když se kolem člověka točí šum, lži a pomluvy, je snadné se nechat strhnout.
-          Já se učím držet Slova — ne jako slogan, ale jako něco, co člověka vyčistí uvnitř.
-        </p>
-        <p>
-          Jestli chceš, napiš mi. Klidně skepticky, klidně na rovinu. Rozhovor je v pořádku.
+          Jako standard života víry nechci mít lidi, emoce ani myšlenky. Pro mě je klíčové Písmo — Bible.
+          Když je všude šum, lži a pomluvy, držím se Slova.
         </p>
 
         <a class="dm" href="https://www.instagram.com/paynt__/" target="_blank" rel="noopener noreferrer">Napsat DM na IG</a>
+        <div class="small">Pokud chceš jen hudbu, respekt — nemusíš řešit nic dalšího.</div>
+      </div>
+    </section>
 
-        <div class="small">
-          Pokud chceš jen hudbu, respekt — nemusíš řešit nic dalšího.
-        </div>
+    <section class="truth reveal" id="slovo" aria-label="Slovo">
+      <h2 class="section-title">Slovo</h2>
+
+      <div class="truth-box">
+        <h3>Proč to vůbec má smysl</h3>
+        <p>
+          Dnes je jednoduché mluvit nahlas… a přitom neříkat nic.
+          Já chci dělat hudbu, která má energii, ale také <b>směr</b>.
+        </p>
+        <p>
+          Pokud tě zajímá víc (nebo máš otázky, i skeptické), klidně napiš.
+          Rozhovor je v pořádku.
+        </p>
+
+        <a class="dm" href="https://www.instagram.com/paynt__/" target="_blank" rel="noopener noreferrer">Napsat DM na IG</a>
+        <div class="small">P.S.: Jestli chceš jen hudbu — respekt.</div>
       </div>
     </section>
   </main>
@@ -592,6 +602,77 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Scroll reveal (IntersectionObserver)
+    const items = document.querySelectorAll(".reveal");
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-in");
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      items.forEach(el => io.observe(el));
+    } else {
+      items.forEach(el => el.classList.add("is-in"));
+    }
+
+    // 4 nejnovější videa z latest.json (vygeneruje workflow níže)
+    async function loadLatest() {
+      const wrap = document.getElementById("latest-wrap");
+      try {
+        const res = await fetch("./latest.json", { cache: "no-store" });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!data?.items?.length) return;
+
+        const items = data.items.slice(0, 4);
+
+        const featured = items[0];
+        const rest = items.slice(1);
+
+        const escapeHtml = (s) =>
+          String(s || "").replace(/[&<>"']/g, (m) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
+
+        const videoCard = (v, cls="", meta="") => `
+          <article class="video ${cls}">
+            <div class="frame">
+              <iframe
+                loading="lazy"
+                src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(v.id)}?rel=0"
+                title="${escapeHtml(v.title)}"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+            </div>
+            <div class="cap">
+              <div class="name">${escapeHtml(v.title)}</div>
+              <div class="meta">${escapeHtml(meta)}</div>
+            </div>
+          </article>
+        `;
+
+        const featuredMeta = featured.published ? `// nejnovější • ${featured.published.slice(0,10)}` : `// nejnovější`;
+        const html = `
+          ${videoCard(featured, "featured reveal", featuredMeta)}
+          <div class="grid-3" aria-label="Další nejnovější videa">
+            ${rest.map(v => videoCard(v, "reveal", v.published ? `// ${v.published.slice(0,10)}` : `//`)).join("")}
+          </div>
+        `;
+
+        wrap.innerHTML = html;
+
+        // znovu napoj reveal na nově vložené prvky
+        const newItems = wrap.querySelectorAll(".reveal");
+        newItems.forEach(el => el.classList.add("is-in"));
+      } catch (e) {
+        // když to spadne, zůstane fallback playlist
+      }
+    }
+
+    loadLatest();
   </script>
 </body>
 </html>
