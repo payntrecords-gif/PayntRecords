@@ -6,7 +6,7 @@
 
   <title>PAYNT — Holy drill</title>
   <meta name="author" content="PAYNT" />
-  <meta name="description" content="PAYNT — holy drill z Prahy. Rap s Bohem: vážně i s nadhledem. Můj standard je Písmo." />
+  <meta name="description" content="PAYNT — holy drill z Prahy. Zvukař. Občas rap. Rap s Bohem: vážně i s nadhledem. Můj standard je Písmo." />
   <meta name="robots" content="index,follow" />
   <meta name="color-scheme" content="dark" />
   <meta name="theme-color" content="#05050a" />
@@ -21,7 +21,7 @@
   <!-- Open Graph -->
   <meta property="og:site_name" content="PAYNT" />
   <meta property="og:title" content="PAYNT — Holy drill" />
-  <meta property="og:description" content="Rap s Bohem. Vážně i s nadhledem. Můj standard je Písmo." />
+  <meta property="og:description" content="Zvukař. Občas rap. Rap s Bohem: vážně i s nadhledem." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="cs_CZ" />
   <meta property="og:url" content="https://payntrecords-gif.github.io/PayntRecords/" />
@@ -31,17 +31,19 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="PAYNT — Holy drill" />
-  <meta name="twitter:description" content="Rap s Bohem. Vážně i s nadhledem. Můj standard je Písmo." />
+  <meta name="twitter:description" content="Zvukař. Občas rap. Rap s Bohem: vážně i s nadhledem." />
   <meta name="twitter:image" content="https://payntrecords-gif.github.io/PayntRecords/paynt.jpg" />
 
   <link href="https://fonts.bunny.net/css?family=syne:400,700,800|jetbrains-mono:400,600" rel="stylesheet" />
 
+  <!-- Structured data -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
-    "@type":"Person",
+    "@type":"MusicGroup",
     "name":"PAYNT",
     "url":"https://payntrecords-gif.github.io/PayntRecords/",
+    "genre":["drill","hip hop"],
     "sameAs":[
       "https://www.instagram.com/paynt__/",
       "https://www.youtube.com/@PayntRecords"
@@ -80,7 +82,7 @@
       color:var(--text);
       font-family:Syne, system-ui, -apple-system, Segoe UI, sans-serif;
       overflow-x:hidden;
-      cursor:crosshair;
+      cursor:default;
     }
     a{color:inherit;text-decoration:none}
     img{max-width:100%;height:auto}
@@ -249,7 +251,6 @@
       letter-spacing:-0.02em;
     }
 
-    /* content-visibility (below-the-fold) */
     .cv{
       content-visibility:auto;
       contain-intrinsic-size: 900px;
@@ -260,6 +261,7 @@
       min-height:100vh;
       padding-top: 118px;
       border-top:none;
+      cursor:crosshair;
     }
     .hero-inner{
       display:grid;
@@ -322,7 +324,7 @@
 
     .sub{
       margin-top:1.2rem;
-      max-width:620px;
+      max-width:680px;
       font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size:.92rem;
       line-height:1.65;
@@ -595,6 +597,62 @@
       margin-top:1rem;
     }
 
+    /* Pro cards (Zvuk) */
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:1rem;
+      margin-top:1.2rem;
+    }
+    .card{
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.2rem;
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 18px 55px rgba(0,0,0,.22);
+      transition: transform .2s ease, border-color .2s ease;
+    }
+    .card:hover{ transform: translateY(-3px); border-color: rgba(0,245,255,.35); }
+    .card h3{
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:-0.02em;
+      font-size:1.25rem;
+      margin-bottom:.45rem;
+    }
+    .card p{
+      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: rgba(255,255,255,.72);
+      line-height:1.6;
+      font-size:.9rem;
+    }
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.5rem;
+      margin-top:.8rem;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:.35rem;
+      padding:.35rem .55rem;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size:.72rem;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+      color: rgba(255,255,255,.78);
+    }
+    .chip::before{
+      content:"";
+      width:7px;height:7px;border-radius:999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      opacity:.95;
+    }
+
     /* Contact */
     .contact{
       background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00));
@@ -622,7 +680,7 @@
       font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       color: rgba(255,255,255,.72);
       line-height:1.6;
-      max-width: 60ch;
+      max-width: 62ch;
     }
 
     /* Footer */
@@ -677,7 +735,7 @@
     }
     .reveal.is-in{ opacity:1; transform:none; }
 
-    /* Hero drift */
+    /* Drift */
     @media (prefers-reduced-motion: no-preference){
       .hero-inner::before{ animation: drift 14s ease-in-out infinite alternate; transform-origin: 50% 50%; }
       @keyframes drift{
@@ -688,7 +746,7 @@
 
     @media (prefers-reduced-motion: reduce){
       .reveal{ opacity:1; transform:none; transition:none; }
-      .btn, .photo img, .video{ transition:none; }
+      .btn, .photo img, .video, .card{ transition:none; }
       html{ scroll-behavior:auto; }
       .spotlight{ display:none; }
     }
@@ -760,6 +818,7 @@
       }
 
       .grid-3{ grid-template-columns:1fr; gap:1rem; }
+      .cards{ grid-template-columns:1fr; }
     }
 
     @media (min-width: 981px){
@@ -780,6 +839,7 @@
       <a href="#hudba" data-spy>HUDBA</a>
       <a href="#pribeh" data-spy>PŘÍBĚH</a>
       <a href="#slovo" data-spy>SLOVO</a>
+      <a href="#zvuk" data-spy>ZVUK</a>
       <a href="#kontakt" data-spy>KONTAKT</a>
       <a href="https://www.youtube.com/@PayntRecords" target="_blank" rel="noopener noreferrer">YT</a>
     </nav>
@@ -801,6 +861,7 @@
     <a href="#hudba" data-spy>HUDBA</a>
     <a href="#pribeh" data-spy>PŘÍBĚH</a>
     <a href="#slovo" data-spy>SLOVO</a>
+    <a href="#zvuk" data-spy>ZVUK</a>
     <a href="#kontakt" data-spy>KONTAKT</a>
     <a href="https://www.youtube.com/@PayntRecords" target="_blank" rel="noopener noreferrer">YT</a>
   </nav>
@@ -821,19 +882,21 @@
             </h1>
 
             <div class="sub">
-              Rap beru vážně. A zároveň si u něj nechávám nadhled.<br>
-              Nechci žít podle nálady. Můj standard je Písmo.
+              Zvuk dělám poctivě. Rapuju, když to má smysl.<br>
+              Nechci jet podle nálady. Můj standard je Písmo.
             </div>
 
             <div class="cta">
               <button class="btn btn-primary" type="button" onclick="location.href='#hudba'">Pusť poslední věci</button>
-              <a class="btn" href="#pribeh">Můj příběh</a>
+              <a class="btn" href="#zvuk">Co dělám</a>
               <button class="btn" id="sharebtn" type="button">Sdílet</button>
             </div>
+
+            <div class="small">Pozn.: Jestli něco zní „na hraně“, ber to jako styl. Pointa je vždycky čistá.</div>
           </div>
 
           <div class="photo" aria-label="Fotka">
-            <div class="photo-badge">LIVE / MIX / REAL</div>
+            <div class="photo-badge">SOUND / LIVE / REAL</div>
             <img
               src="./paynt.jpg"
               width="1184"
@@ -953,6 +1016,58 @@
       </div>
     </section>
 
+    <section id="zvuk" class="reveal cv" aria-label="Zvuk">
+      <div class="wrap">
+        <h2 class="section-title">Zvuk</h2>
+        <div class="small" style="margin-top:-.8rem; margin-bottom:1.1rem;">
+          Beaty nedělám. Dělám zvuk — čistě, čitelně a s citem.
+        </div>
+
+        <div class="cards" role="list">
+          <div class="card" role="listitem">
+            <h3>Mix & edit</h3>
+            <p>
+              Mluvené slovo / rap / video. Čistota, dynamika, srozumitelnost.
+              Když je potřeba, řeším i “záchranu” nahrávky.
+            </p>
+            <div class="chips">
+              <span class="chip">De-noise</span>
+              <span class="chip">Vokál</span>
+              <span class="chip">Video</span>
+            </div>
+          </div>
+
+          <div class="card" role="listitem">
+            <h3>Live zvuk</h3>
+            <p>
+              Akce, menší stage, talky. Nehoním hlasitost.
+              Chci, aby to znělo přirozeně a bez nervů.
+            </p>
+            <div class="chips">
+              <span class="chip">PA</span>
+              <span class="chip">Mikrofony</span>
+              <span class="chip">Monitor</span>
+            </div>
+          </div>
+
+          <div class="card" role="listitem">
+            <h3>Rap (občas)</h3>
+            <p>
+              Feat dávám jen když to sedí. Nejedu na sílu.
+              Když to má být “jen hype”, radši to nedám.
+            </p>
+            <div class="chips">
+              <span class="chip">Feat</span>
+              <span class="chip">Write</span>
+              <span class="chip">Flow</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="small">Nejrychlejší domluva je přes IG DM.</div>
+      </div>
+    </section>
+
     <section class="contact reveal cv" id="kontakt" aria-label="Kontakt">
       <div class="wrap">
         <h2 class="section-title">Kontakt</h2>
@@ -961,14 +1076,15 @@
           <div>
             <h3>Jsem na příjmu</h3>
             <p>
-              Nejrychlejší je IG DM. Pokud chceš spolupráci / beat / střih / cokoliv,
-              napiš a domluvíme se normálně.
+              Nejrychlejší je IG DM. Napiš mi, co přesně potřebuješ (mix / live / střih zvuku),
+              jaký je termín a pošlu ti rovnou návrh řešení.
             </p>
-            <div class="small">Neřeším formu. Řeším respekt.</div>
+            <div class="small">Když neodepíšu hned, nejsem ghost — jen dělám zvuk.</div>
           </div>
 
           <div class="cta" style="margin-top:.2rem;">
             <a class="btn btn-primary" href="https://www.instagram.com/paynt__/" target="_blank" rel="noopener noreferrer">Napsat na IG</a>
+            <button class="btn" id="copyig" type="button">Zkopírovat @</button>
             <a class="btn" href="https://www.youtube.com/@PayntRecords" target="_blank" rel="noopener noreferrer">YouTube</a>
           </div>
         </div>
@@ -1080,7 +1196,7 @@
       items.forEach(el => io.observe(el));
     })();
 
-    // Scrollspy (desktop + mobile)
+    // Scrollspy
     (function () {
       if (!("IntersectionObserver" in window)) return;
 
@@ -1141,8 +1257,20 @@
           } else {
             await copy(url);
           }
-        } catch (e) {
-          // user cancel -> no drama
+        } catch (e) {}
+      });
+    })();
+
+    // Copy IG handle
+    (function () {
+      const btn = document.getElementById("copyig");
+      if (!btn) return;
+      btn.addEventListener("click", async () => {
+        try{
+          await navigator.clipboard.writeText("@paynt__");
+          toast("Zkopírováno: @paynt__");
+        }catch(e){
+          toast("Nešlo zkopírovat.");
         }
       });
     })();
